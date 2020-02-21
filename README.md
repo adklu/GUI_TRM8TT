@@ -22,7 +22,11 @@ Professional 8 Track Audio Recorder for Midi CC Controllers
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
-
+ 
+/* 
+* 
+* 
+* 
 
 * Required:
 * Linux
@@ -34,3 +38,4 @@ Professional 8 Track Audio Recorder for Midi CC Controllers
 * Ecasound 
 * Midi CC controller for 8 tracks (e.g. Behringer XTouchCompact), it is possible to assign every set of 8 CC faders/knobs to  volumne or balance.
 * Audio Interface for Linux 
+*/
