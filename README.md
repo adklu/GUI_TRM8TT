@@ -24,13 +24,13 @@ Professional 8 Track Audio Recorder for Midi CC Controllers
  */
 
 
-Required:
-Linux
-Qt 
-ALSA
-libasound2-dev
-Jack
-libjack-dev or libjack-jackd2-dev
-Ecasound 
-Midi CC controller for 8 tracks (e.g. Behringer XTouchCompact), it is possible to assign every set of 8 CC faders/knobs to volumne or balance.
-Audio Interface for Linux 
+* Required:
+* Linux
+* Qt 
+* ALSA
+* libasound2-dev
+* Jack
+* libjack-dev or libjack-jackd2-dev
+* Ecasound 
+* Midi CC controller for 8 tracks (e.g. Behringer XTouchCompact), it is possible to assign every set of 8 CC faders/knobs to  volumne or balance.
+* Audio Interface for Linux 
