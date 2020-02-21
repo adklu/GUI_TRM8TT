@@ -39,3 +39,28 @@ Professional 8 Track Audio Recorder for Midi CC Controllers
 * Midi CC controller for 8 tracks (e.g. Behringer XTouchCompact), it is possible to assign every set of 8 CC faders/knobs to  volumne or balance.
 * Audio Interface for Linux 
 */
+*
+*-
+*Features:
+*- 3 colors high resolution peak meter  
+*- midi notes as transport buttons 
+*//RW: 49
+*//FF: 50
+*//RTZ: 51
+*//STOP: 53
+*//PLAY:54
+*(= Behringer XTouchCompact default setting for layer 1)
+*-
+* When pressing '<<' or '>>' the tape skips x seconds (x can be set between 1 and 999 second(s))
+*
+*For further information please refer to the screenshot
+
+
+
+
+
+
+
+
+
+
