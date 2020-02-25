@@ -18,18 +18,31 @@ D) GUI
 A) REQUIRED
 
 Linux
+
 Qt5
+
 (Qt 5.2.1)
+
 (mesa-common-dev)
-(libgl1-mesa-dev libglu1-mesa-dev) 
+
+(libgl1-mesa-dev libglu1-mesa-dev)
+
 ALSA
+
 libasound2-dev
+
 libasound2
+
 Jack
+
 libjack-dev or libjack-jackd2-dev
+
 Ecasound 
+
 Midi CC controller for 8 tracks (e.g. Behringer XTouchCompact)
+
 Audio Interface for Linux (ALSA)
+
 
 B) INSTALL
 
