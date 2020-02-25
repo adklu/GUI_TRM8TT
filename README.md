@@ -76,15 +76,15 @@ int pan_map = 10;
 
 5) "Transport": Permanent assignment of midi notes
 
-<<: 49
+'<<': 49
 
->>: 50
+'>>': 50
 
-RTZ: 51
+'RTZ': 51
 
-STOP: 53
+'STOP': 53
 
->:54
+'>':54
 
 (= Behringer XTouchCompact default settings)
 
