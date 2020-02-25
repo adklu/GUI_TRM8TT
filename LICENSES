@@ -1,0 +1,255 @@
+LICENSES
+ 
+A) LICENSES of included non-GUI_TRM8TT files and libraries
+B) LICENSE of GUI_TRM8TT
+
+Content:
+A) LICENSES of included non-GUI_TRM8TT files and libraries
+1) asoundlib.h
+2) eca-control-interface.cpp
+3) eca-control-interface.h
+4) ecasoundc.h
+5) ecasoundc_sa.c
+6) ecicpp_tester.cpp
+7) kvu_numtostr.cpp
+8) libecasound_tester.c
+9) Qt
+B) LICENSE of GUI_TRM8TT
+
+
+
+1)
+/**
+ * \file include/asoundlib.h
+ * \brief Application interface library for the ALSA driver
+ * \author Jaroslav Kysela <perex@perex.cz>
+ * \author Abramo Bagnara <abramo@alsa-project.org>
+ * \author Takashi Iwai <tiwai@suse.de>
+ * \date 1998-2001
+ *
+ * Application interface library for the ALSA driver
+ */
+/*
+ *   This library is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU Lesser General Public License as
+ *   published by the Free Software Foundation; either version 2.1 of
+ *   the License, or (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU Lesser General Public License for more details.
+ *
+ *   You should have received a copy of the GNU Lesser General Public
+ *   License along with this library; if not, write to the Free Software
+ *   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA
+ *
+ */
+
+2)
+// eca-control-interface.cpp: C++ implementation of the Ecasound
+//                            Control Interface
+// Copyright (C) 2000,2002,2009 Kai Vehmanen
+//
+// Attributes:
+//     eca-style-version: 3 (see Ecasound Programmer's Guide)
+//
+// This library is free software; you can redistribute it and/or
+// modify it under the terms of the GNU Lesser General Public
+// License as published by the Free Software Foundation; either
+// version 2.1 of the License, or (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
+// ------------------------------------------------------------------------
+
+3)
+eca-control-interface.h
+/** ------------------------------------------------------------------------
+ * ecasoundc.h: C++ implementation of the Ecasound Control Interface
+ * Copyright (C) 2000-2002 Kai Vehmanen
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * -------------------------------------------------------------------------
+ */
+
+4)
+/** ------------------------------------------------------------------------
+ * ecasoundc.h: Standalone C implementation of the 
+ *              ecasound control interface
+ * Copyright (C) 2000-2002 Kai Vehmanen
+ * Copyright (C) 2001 Aymeric Jeanneau
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ * -------------------------------------------------------------------------
+ */
+
+5)
+/** 
+ * @file ecasoundc_sa.cpp Standalone C implementation of the 
+ *                        ecasound control interface
+ */
+
+/* FIXME: add check for big sync-error -> ecasound probably 
+ *        died so better to give an error */
+/* FIXME: add check for msgsize errors */
+
+/** ------------------------------------------------------------------------
+ * ecasoundc.cpp: Standalone C implementation of the 
+ *                ecasound control interface
+ * Copyright (C) 2000-2006,2008,2009 Kai Vehmanen
+ * Copyright (C) 2003 Michael Ewe
+ * Copyright (C) 2001 Aymeric Jeanneau
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+ *
+ * -------------------------------------------------------------------------
+ * History of major changes:
+ *
+ * 2009-02-08 Kai Vehmanen
+ *     - Finally got rid of the fixed-size parsing buffers.
+ *     - Added handling (or proper ignoring) of SIGPIPE signals.
+ * 2006-12-06 Kai Vehmanen 
+ *     - Fixed severe string termination bug in handling lists of
+ *       strings.
+ *     - Fixed mechanism for waiting on grandchild ecasound process to exit.
+ * 2003-12-24 Michael Ewe
+ *     - Fixed signaling issues on FreeBSD. Modified to perform a
+ *       double-fork to better decouple ECI stack and the ecasound
+ *       engine process.
+ * 2002-10-04 Kai Vehmanen
+ *     - Rewritten as a standalone implementation.
+ * 2001-06-04 Aymeric Jeanneau
+ *     - Added reentrant versions of all public ECI functions.
+ * 2000-12-06 Kai Vehmanen
+ *     - Initial version.
+ *
+ * -------------------------------------------------------------------------
+ */
+
+6)
+ecicpp_tester.cpp
+// ------------------------------------------------------------------------
+// eca-control-interface_tester.cpp: Runs a set of ECI C++ unit tests.
+// Copyright (C) 2002,2009 Kai Vehmanen
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
+// ------------------------------------------------------------------------
+
+7)
+// ------------------------------------------------------------------------
+// kvu_numtostr.cpp: Routines for converting string objects to numbers. 
+// Copyright (C) 1999,2001 Kai Vehmanen
+//
+// This program is free software; you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation; either version 2 of the License, or
+// (at your option) any later version.
+// 
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+// 
+// You should have received a copy of the GNU General Public License
+// along with this program; if not, write to the Free Software
+// Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
+// ------------------------------------------------------------------------
+
+8)
+/* ------------------------------------------------------------------------
+ * libecasound_tester.c: Runs a set of ECI C unit tests.
+ * Copyright (C) 2002,2006,2009 Kai Vehmanen
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
+ * ------------------------------------------------------------------------ */
+
+9)
+Qt: http://wiki.qt.io/Get_The_Source
+
+B)
+ /* GUI_TRM8TT 
+ *
+ * Copyright (c) 2020 A.D.Klumpp
+ *
+ *
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ */
