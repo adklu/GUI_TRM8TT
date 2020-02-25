@@ -94,6 +94,11 @@ int pan_map = 10;
 
 (= Behringer XTouchCompact default settings)
 
+GUI
+
+![alt text](https://github.com/AndreasDanielKlumpp/GUI_TRM8TT/blob/master/trm8ttManual.pdf)
+
+
 
 
 
