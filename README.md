@@ -1,50 +1,34 @@
-GUI_TRM8TT is a professional 8 Track (overdubbing) Audio Recorder for Midi CC Controllers. 
+# GUI_TRM8TT is a professional 8 Track (overdubbing) Audio Recorder for Midi CC Controllers. 
 
 For LICENSES see LICENSES file
 
-Content
+## Content
 
-A) REQUIRED
-
-B) INSTALL
-
-C) FIRST TIME USE
-
-D) GUI
+A) REQUIRED  
+B) INSTALL  
+C) FIRST TIME USE  
+D) GUI  
 
 --------------------------
 
 
-A) REQUIRED
+## A) REQUIRED
 
-Linux
-
-Qt5
-
-(Qt 5.2.1)
-
-(mesa-common-dev)
-
-(libgl1-mesa-dev libglu1-mesa-dev)
-
-ALSA
-
-libasound2-dev
-
-libasound2
-
-Jack
-
-libjack-dev or libjack-jackd2-dev
-
-Ecasound 
-
-Midi CC controller for 8 tracks (e.g. Behringer XTouchCompact)
-
+Linux  
+Qt5  
+(tested with Qt 5.2.1)  
+(mesa-common-dev)  
+(libgl1-mesa-dev libglu1-mesa-dev)  
+ALSA  
+libasound2-dev  
+libasound2  
+Jack  
+libjack-dev or libjack-jackd2-dev  
+Ecasound  
+Midi CC controller for 8 tracks (e.g. Behringer XTouchCompact)  
 Audio Interface for Linux (ALSA)
 
-
-B) INSTALL
+## B) INSTALL
 
 1) Copy Source into (replace [user name]): /home/[user name]/GUI_TRM8TT
 2) Create the makefile: Run the command 'qmake' (and the following commands) inside of /home/[user name]/GUI_TRM8TT
