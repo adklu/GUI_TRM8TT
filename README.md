@@ -66,13 +66,13 @@ Type=Application
 
 4) Assignment of a set of 8 CC faders/knobs to volume or balance:
 
-To map volume faders:
-Create with a text editor like gedit inside of the /home/[user name]/GUI_TRM8TT folder a text file with the name "vol_map", open the file
+To map volume faders:  
+Create with a text editor inside of /home/[user name]/GUI_TRM8TT a file with the name "vol_map",
 enter the first midi CC number (e.g. "1"), save and close the file (now midi CC 1 to 8 are assigned as volumne faders).
 
-To map panning knobs:
-Create inside of the /home/[username]/GUI_TRM8TT folder a text file with the name "pan_map", open the file
-enter the first midi CC number (e.g. "10"), save and close the file (now midi CC 10 to 18 are assigned as panning knobs).
+To map panning knobs:  
+Create inside of /home/[username]/GUI_TRM8TT a file with the name "pan_map",
+enter the first midi CC number (e.g. "10"), save and close the file (now midi CC 10 to 17 are assigned as panning knobs).
 
 If no vol_map or pan_map files are inside of the folder, the following values are used:
 int vol_map = 1;
