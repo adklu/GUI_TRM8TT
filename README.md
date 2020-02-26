@@ -1,4 +1,4 @@
-## GUI_TRM8TT - Professional 8 Track Overdubbing Audio Recorder for Midi CC Controllers  (8 track tape recorder style)
+## GUI_TRM8TT - Professional 8 Track Overdubbing Audio Recorder for Midi CC Controllers  (8 Track Tape Recorder Style)
 
 For LICENSES see LICENSES file
 
