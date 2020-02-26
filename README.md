@@ -94,6 +94,8 @@ Midi channel = Channel 1
 
 ### D) GUI
 
+![alt text](https://github.com/AndreasDanielKlumpp/GUI_TRM8TT/blob/master/trm8ttManual.png)
+
 
 
 
