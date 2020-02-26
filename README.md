@@ -29,13 +29,13 @@ Audio Interface for Linux (ALSA)
 
 ### B) INSTALL
 
-1) Copy Source into (replace [username]): /home/[username]/GUI_TRM8TT
+- Copy Source into (replace [username]): /home/[username]/GUI_TRM8TT
 
-2) ./INSTALL.sh
+- ./INSTALL.sh
 
-3.1) Start GUI_TRM8TT via command (debug output in terminal): /home/[username]/GUI_TRM8TT/GUI_TRM8TT
+- Start GUI_TRM8TT via command (debug output in terminal): /home/[username]/GUI_TRM8TT/GUI_TRM8TT
 
-3.2) Edit Desktop file (GUI_TRM8TT.desktop):
+- Edit Desktop file (GUI_TRM8TT.desktop):
 
 replace [username] in:
 
