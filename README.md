@@ -29,8 +29,8 @@ Audio Interface for Linux (ALSA)
 
 ### B) INSTALL
 
-1) Copy Source into (replace [user name]): /home/[user name]/GUI_TRM8TT
-2) Create the makefile: Run the command 'qmake' (and the following commands) inside of /home/[user name]/GUI_TRM8TT
+1) Copy Source into (replace [username]): /home/[username]/GUI_TRM8TT
+2) Create the makefile: Run the command 'qmake' (and the following commands) inside of /home/[username]/GUI_TRM8TT
 3) Rename Makefile into Makefile.am
 4) Run: aclocal 
 5) Run: automake --add-missing --foreign
@@ -40,21 +40,15 @@ Audio Interface for Linux (ALSA)
 9) Run: make
 
 10.1) Start GUI_TRM8TT via command (debug output in terminal):
-/home/[user name]/GUI_TRM8TT/GUI_TRM8TT
+/home/[username]/GUI_TRM8TT/GUI_TRM8TT
 
-10.2) Create Desktop file (GUI_TRM8TT.desktop):
+10.2) Edit Desktop file (GUI_TRM8TT.desktop):
 
-[Desktop Entry]
-Name=GUI_TRM8TT
-Version=0.0.76
-GenericName=GUI_TRM8TT
-Comment=GUI_TRM8TT
-Exec=/home/[user name]/GUI_TRM8TT/GUI_TRM8TT %F
-Icon=/home/[user name]/GUI_TRM8TT/32_32.png
-Categories=audio;Qt;
-Keywords=audio;recorder;Qt;
-Terminal=false
-Type=Application
+replace [username] in:
+
+Exec=/home/[username]/GUI_TRM8TT/GUI_TRM8TT %F 
+
+Icon=/home/[username]/GUI_TRM8TT/32_32.png 
 
 
 ###  C) FIRST TIME USE
@@ -67,7 +61,7 @@ Type=Application
 4) Assignment of a set of 8 CC faders/knobs to volume or balance:
 
 To map volume faders:  
-Create with a text editor inside of /home/[user name]/GUI_TRM8TT a file with the name "vol_map",
+Create with a text editor inside of /home/[username]/GUI_TRM8TT a file with the name "vol_map",
 enter the first midi CC number (e.g. "1"), save and close the file (now midi CC 1 to 8 are assigned as volumne faders).
 
 To map panning knobs:  
