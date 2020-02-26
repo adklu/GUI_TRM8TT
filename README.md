@@ -79,7 +79,7 @@ int vol_map = 1;
 int pan_map = 10;
 (= Behringer XTouchCompact Layer A)
 
-5) "Transport": Permanent assignment of midi notes
+5) 'Transport function': Midi note (Controller)
 
 '<<': 49  
 '>>': 50  
