@@ -14,18 +14,17 @@ D) GUI
 
 ## A) REQUIRED
 
-Linux  
-Qt5  
-(tested with Qt 5.2.1)  
+Linux (tested with Debian 9)  
+Qt5 (tested with Qt 5.2.1)  
 (mesa-common-dev)  
 (libgl1-mesa-dev libglu1-mesa-dev)  
 ALSA  
 libasound2-dev  
 libasound2  
-Jack  
+Jack (tested with 1.9.10)  
 libjack-dev or libjack-jackd2-dev  
 Ecasound (tested with 2.9.1-7)
-Midi CC controller for 8 tracks (e.g. Behringer XTouchCompact)  
+Midi CC controller for 8 tracks (e.g. Behringer XTouch Compact)  
 Audio Interface for Linux (ALSA)
 
 ## B) INSTALL
@@ -58,7 +57,7 @@ Terminal=false
 Type=Application
 
 
-C) FIRST TIME USE
+##  C) FIRST TIME USE
 
 0) Set sampling rate/frames/period/buffer... in JACK e.g. via QjackCtl (GUI_TRM8TT will start JACK automatically with the saved settings).
 1) GUI_TRM8TT is creating helper .sh files inside of the GUI_TRM8TT folder (Message: 'Please restart your PC, mark all GUI_xTRM8TT_exit.sh or GUI_xTRM8TT_restart.sh files as executables and restart the program.'). Without these executable files GUI_TRM8TT will not work.
@@ -66,6 +65,7 @@ C) FIRST TIME USE
 3) Please select the midi CC controller (Settings) and restart GUI_TRM8TT.
 
 4) Assignment of a set of 8 CC faders/knobs to volume or balance:
+
 To map volume faders:
 Create with a text editor like gedit inside of the /home/[user name]/GUI_TRM8TT folder a text file with the name "vol_map", open the file
 enter the first midi CC number (e.g. "1"), save and close the file (now midi CC 1 to 8 are assigned as volumne faders).
@@ -81,21 +81,18 @@ int pan_map = 10;
 
 5) "Transport": Permanent assignment of midi notes
 
-'<<': 49
-
-'>>': 50
-
-'RTZ': 51
-
-'STOP': 53
-
-'>':54
-
+'<<': 49  
+'>>': 50  
+'RTZ': 51  
+'STOP': 53  
+'>':54  
 (= Behringer XTouchCompact default settings)
 
+Note: Midi channel = Channel 1
 
 
-D) GUI
+
+## D) GUI
 
 ![alt text](https://github.com/AndreasDanielKlumpp/GUI_TRM8TT/blob/master/trm8ttManual.png)
 
