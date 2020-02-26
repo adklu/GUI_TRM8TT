@@ -12,7 +12,7 @@ D) GUI
 --------------------------
 
 
-## A) REQUIRED
+### A) REQUIRED
 
 Linux (tested with Debian 9)  
 Qt5 (tested with Qt 5.2.1)  
@@ -27,7 +27,7 @@ Ecasound (tested with 2.9.1-7)
 Midi CC controller for 8 tracks (e.g. Behringer XTouch Compact)  
 Audio Interface for Linux (ALSA)
 
-## B) INSTALL
+### B) INSTALL
 
 1) Copy Source into (replace [user name]): /home/[user name]/GUI_TRM8TT
 2) Create the makefile: Run the command 'qmake' (and the following commands) inside of /home/[user name]/GUI_TRM8TT
@@ -57,7 +57,7 @@ Terminal=false
 Type=Application
 
 
-##  C) FIRST TIME USE
+###  C) FIRST TIME USE
 
 0) Set sampling rate/frames/period/buffer... in JACK e.g. via QjackCtl (GUI_TRM8TT will start JACK automatically with the saved settings).
 1) GUI_TRM8TT is creating helper .sh files inside of the GUI_TRM8TT folder (Message: 'Please restart your PC, mark all GUI_xTRM8TT_exit.sh or GUI_xTRM8TT_restart.sh files as executables and restart the program.'). Without these executable files GUI_TRM8TT will not work.
@@ -92,7 +92,7 @@ Midi channel = Channel 1
 
 
 
-## D) GUI
+### D) GUI
 
 ![alt text](https://github.com/AndreasDanielKlumpp/GUI_TRM8TT/blob/master/trm8ttManual.png)
 
