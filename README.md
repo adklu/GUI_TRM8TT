@@ -88,7 +88,7 @@ int pan_map = 10;
 '>':54  
 (= Behringer XTouchCompact default settings)
 
-Note: Midi channel = Channel 1
+Midi channel = Channel 1
 
 
 
