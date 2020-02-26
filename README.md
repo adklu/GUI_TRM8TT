@@ -30,26 +30,18 @@ Audio Interface for Linux (ALSA)
 ### B) INSTALL
 
 1) Copy Source into (replace [username]): /home/[username]/GUI_TRM8TT
-2) Create the makefile: Run the command 'qmake' (and the following commands) inside of /home/[username]/GUI_TRM8TT
-3) Rename Makefile into Makefile.am
-4) Run: aclocal 
-5) Run: automake --add-missing --foreign
-6) Run: autoconf
-7) Rename Makefile.am into Makefile
-8) Run: ./configure
-9) Run: make
 
-10.1) Start GUI_TRM8TT via command (debug output in terminal):
-/home/[username]/GUI_TRM8TT/GUI_TRM8TT
+2) ./INSTALL.sh
 
-10.2) Edit Desktop file (GUI_TRM8TT.desktop):
+3.1) Start GUI_TRM8TT via command (debug output in terminal): /home/[username]/GUI_TRM8TT/GUI_TRM8TT
+
+3.2) Edit Desktop file (GUI_TRM8TT.desktop):
 
 replace [username] in:
 
 Exec=/home/[username]/GUI_TRM8TT/GUI_TRM8TT %F 
 
 Icon=/home/[username]/GUI_TRM8TT/32_32.png 
-
 
 ###  C) FIRST TIME USE
 
