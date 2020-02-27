@@ -15,6 +15,7 @@ D) GUI
 
 ### A) REQUIRED
 
+```
 Linux (tested with Debian 9)  
 Qt5 (tested with Qt 5.2.1)  
 (mesa-common-dev)  
@@ -27,6 +28,7 @@ libjack-dev or libjack-jackd2-dev
 Ecasound (tested with 2.9.1-7)  
 Midi CC controller for 8 tracks (e.g. Behringer XTouch Compact)  
 Audio Interface for Linux (ALSA)
+```
 
 ### B) INSTALL
 
