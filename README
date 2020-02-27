@@ -18,6 +18,7 @@ D) GUI
 
 Linux (tested with Debian 9)
 Qt5 (tested with Qt 5.2.1)
+(gtk2: qt5-style-plugins: echo "export QT_QPA_PLATFORMTHEME=gtk2" >> ~/.profile) 
 qmake
 GNU Autotools (automake, autoconf, configure, make)
 (mesa-common-dev)
