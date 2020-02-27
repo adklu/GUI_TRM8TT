@@ -28,6 +28,8 @@ libjack-dev or libjack-jackd2-dev
 Ecasound (tested with 2.9.1-7)  
 Midi CC controller for 8 tracks (e.g. Behringer XTouch Compact)  
 Audio Interface for Linux (ALSA)
+GNU Autotools (automake, autoconf, configure, make)
+qmake
 ```
 
 ### B) INSTALL
