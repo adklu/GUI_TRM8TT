@@ -55,6 +55,7 @@ Icon=/home/[username]/GUI_TRM8TT/32_32.png
 
 4) Assignment of a set of 8 CC faders/knobs to volume or balance:
 
+```
 To map volume faders:  
 Create with a text editor inside of /home/[username]/GUI_TRM8TT a file with the name "vol_map",
 enter the first midi CC number (e.g. "1"), save and close the file (now midi CC 1 to 8 are assigned as volumne faders).
@@ -67,15 +68,18 @@ If no vol_map or pan_map files are inside of the folder, the following values ar
 int vol_map = 1;
 int pan_map = 10;
 (= Behringer XTouchCompact Layer A)
+```
 
 5) 'Transport function': Midi note (Controller)
 
+```
 '<<': 49  
 '>>': 50  
 'RTZ': 51  
 'STOP': 53  
 '>':54  
 (= Behringer XTouchCompact default settings)
+```
 
 Midi channel = Channel 1
 
