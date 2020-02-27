@@ -32,7 +32,7 @@ Audio Interface for Linux (ALSA)
 
 - Copy Source into (replace [username]): /home/[username]/GUI_TRM8TT
 
-- mark all .sh and .desktop files as executables
+- Mark all .sh and .desktop files as executables
 
 - ./INSTALL.sh
 
