@@ -36,8 +36,6 @@ Audio Interface for Linux (ALSA)
 
 - ./INSTALL.sh
 
-- Start GUI_TRM8TT via command (debug output in terminal): /home/[username]/GUI_TRM8TT/GUI_TRM8TT
-
 - Edit Desktop file (GUI_TRM8TT.desktop):
 
 replace [username] in:
@@ -45,6 +43,8 @@ replace [username] in:
 Exec=/home/[username]/GUI_TRM8TT/GUI_TRM8TT %F 
 
 Icon=/home/[username]/GUI_TRM8TT/32_32.png 
+
+(To start GUI_TRM8TT via command (debug output in terminal): /home/[username]/GUI_TRM8TT/GUI_TRM8TT)
 
 ###  C) FIRST TIME USE
 
