@@ -30,7 +30,7 @@ Jack (tested with 1.9.10)
 libjack-dev or libjack-jackd2-dev
 Ecasound (tested with 2.9.1-7)
 Midi CC controller for 8 tracks (e.g. Behringer XTouch Compact)
-Audio Interface for Linux (ALSA)
+Audio Interface for Linux (ALSA) with hardware monitoring
 
 
 ### B) INSTALL
