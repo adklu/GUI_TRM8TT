@@ -1,5 +1,4 @@
-//v0076
-
+//v0077
 /*
  * GUI_TRM8TT - Professional 8 Track Audio Recorder for Midi CC Controllers
  *
@@ -65,7 +64,10 @@ int pan_map = 10;
 //(= Behringer XTouchCompact default settings)
 
 //--------------------------------------------------------
-//bug fixes v0074:
+//bug fixes
+//v0077
+//incorrect midi error message with: snd_seq_get_port_subscription(seq, subs) == 0
+//v0074:
 //paused fader crash
 //spam button crash
 //empty folder playback/stop crash
@@ -1725,17 +1727,25 @@ int perm;
 
     if (snd_seq_get_port_subscription(seq, subs) == 0)
             {
-                snd_seq_close(seq);
+//                snd_seq_close(seq);
 
-                emit midiinfo("Midi error (connection)");
-                return;
+//                emit midiinfo("Midi error (connection)");
+//                return;
+
+                qDebug() << "snd_seq_get_port_subscription(seq, subs) == 0";
+
             }
             if (snd_seq_subscribe_port(seq, subs) < 0)
             {
-                snd_seq_close(seq);
+//                snd_seq_close(seq);
 
-                emit midiinfo("Midi error");
-                return;
+//                emit midiinfo("Midi error");
+//                return;
+
+                 qDebug() << "snd_seq_subscribe_port(seq, subs) < 0";
+
+
+
              }
 
 
