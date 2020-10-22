@@ -2,35 +2,58 @@ v105p
 
 ## GUI_TRM8TT - Professional 8 Track Audio Recorder
 
+
 For LICENSES see LICENSES file
+
 
 ### Content
 
 A) REQUIRED
+
 B) INSTALL
+
 C) FIRST TIME USE
+
 D) GUI
 
 ------------------
 
+
 ### A) REQUIRED
 
+
 Linux (tested with Debian 9 and 10)
+
 Qt5, qt5-default
+
 build-essential
+
 qmake
+
 GNU Autotools (automake, autoconf, configure, make)
+
 (mesa-common-dev)
+
 (libgl1-mesa-dev, libglu1-mesa-dev)
+
 ALSA
+
 libasound2-dev
+
 libasound2
+
 Jack (tested with 1.9.10) with realtime scheduling
+
 (see https://jackaudio.org/faq/linux_rt_config.html)
+
 libjack-dev or libjack-jackd2-dev
+
 Ecasound (tested with 2.9.1-7)
+
 Midi CC controller for 8 tracks (e.g. Behringer XTouch Compact)
+
 Audio Interface for Linux (ALSA) with hardware monitoring
+
 (gtk2: install qt5-style-plugins -> echo "export QT_QPA_PLATFORMTHEME=gtk2" >> ~/.profile) 
 
 
