@@ -3,8 +3,6 @@ v105p
 ## GUI_TRM8TT - Professional 8 Track Audio Recorder
 
 
-For LICENSES see LICENSES file
-
 
 ### Content
 
