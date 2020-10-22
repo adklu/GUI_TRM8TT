@@ -31,7 +31,8 @@ signals:
         void esignal(QString fileName);
 //          void signalcstimer(int);
 
-
+//wip-v80
+       // void signalRecValue_t8(int);
 
 private:
     Ui::MainWindow *ui;
@@ -48,6 +49,8 @@ private slots:
     void resetslot();
     void stopslot();
     void fileslot();
+    void writenotedb();
+     void writedb();
 
     void note1enterslot();
       void note2enterslot();

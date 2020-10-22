@@ -1,4 +1,5 @@
-//v0077
+
+
 /*
  * GUI_TRM8TT - Professional 8 Track Audio Recorder for Midi CC Controllers
  *
@@ -23,8 +24,8 @@
 
 
 //Required:
-//Linux
-//Qt5
+//Debian 9/10
+//Qt5, qt5-default, build-essential
 //ALSA
 //libasound2-dev
 //libasound2
@@ -65,6 +66,13 @@ int pan_map = 10;
 
 //--------------------------------------------------------
 //bug fixes
+//v103
+//fixed: crash when pressing stop, >>, <<, RTZ before pressing start
+//v102
+//removed while (! in  QTextStream
+//v80
+//sqlite replaced by txt db
+//added to readme: required: qt5-default, build-essential
 //v0077
 //incorrect midi error message with: snd_seq_get_port_subscription(seq, subs) == 0
 //v0074:
@@ -137,11 +145,11 @@ int timerLEDsOK=0;
 
 
 
-//sql
-#include <QSqlDatabase>
-#include <QSqlDriver>
-#include <QSqlError>
-#include <QSqlQuery>
+//sql removed for v80
+//#include <QSqlDatabase>
+//#include <QSqlDriver>
+//#include <QSqlError>
+//#include <QSqlQuery>
 
 #include <QDateTime>
 #include "thread1.h"
@@ -261,6 +269,15 @@ QString HomePathT = QDir::homePath();
 //int track6_rec = 0;
 //int track7_rec = 0;
 //int track8_rec = 0;
+
+QString getdbLine1="";
+QString getdbLine2="";
+QString getdbLine3="";
+QString getdbLine4="";
+QString getdbLine5="";
+QString getdbLine6="";
+QString getdbLine7="";
+QString getdbLine8="";
 
 
 
@@ -1469,8 +1486,8 @@ void Thread1::alsadisconnect()
            else
            {
            QTextStream in(&hfile);
-                 while (!in.atEnd())
-                   {
+                 //while (!in.atEnd())
+                  // {
                      QString hostrr = in.readLine();
 
                      if(~(hostrr.isEmpty()))
@@ -1479,7 +1496,7 @@ void Thread1::alsadisconnect()
                       qsenderv = hostrr;
 
                           }
-                    }
+                   // }
            }
              hfile.close();
 
@@ -1585,8 +1602,8 @@ void Thread1::alsaconnect()
            else
            {
            QTextStream in(&hfile);
-                 while (!in.atEnd())
-                   {
+                 //while (!in.atEnd())
+                   //{
                      QString hostrr = in.readLine();
 
                      if(~(hostrr.isEmpty()))
@@ -1595,7 +1612,7 @@ void Thread1::alsaconnect()
                       qsenderv = hostrr;
 
                           }
-                    }
+                    //}
            }
              hfile.close();
 //sql
@@ -1772,29 +1789,221 @@ qDebug() << "_____________________--worker thread 1" << reinterpret_cast<std::ui
 
 qDebug() << "QDir::homePath() from thread1" << HomePathT;
 
+//-------v80-------------------
+
+
+QString qsenderv;
+
+
+QString HomePathT = QDir::homePath();
+     QString tapeslotfilename = HomePathT + "/GUI_TRM8TT/trm8tt_tapeslot.txt";
+
+      qDebug() << "___ts444____tapeslotfilename____________  " << tapeslotfilename;
+
+
+    QFile hfile(tapeslotfilename);
+
+
+          if (!hfile.open(QIODevice::ReadOnly | QIODevice::Text))
+          {
+
+              qDebug() << "___ error (file)____________ " << tapeslotfilename;
+          }
+
+
+          else
+          {
+              qDebug() << "___  (file)___else____ts______  " << tapeslotfilename;
+
+
+          QTextStream in(&hfile);
+
+           qDebug() << "__ (file)___else____ts222______  " << tapeslotfilename;
 
 
 
-QSqlQuery queryrsf2ss;
-        queryrsf2ss.exec("SELECT settingstext FROM settingstable WHERE settings = 'folder';");
-
-     if(!queryrsf2ss.isActive())
-            {
-                    qWarning() << "---------------------sql ERROR: " << queryrsf2ss.lastError().text();
-            }
-            if(queryrsf2ss.first())
-            {
-                activetape = (queryrsf2ss.value(0).toString());
-              //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" << (queryrsf2.value(0).toString()) << "trackNRstring:" << trackNRstring;
-              qDebug() << "activetape= --------------****************----------" << activetape;
-            }
-            else
-            {
-              qDebug() << ("activetape data not found in db");
-            }
+                    qDebug() << "___w____ts______ " << tapeslotfilename;
 
 
-//
+                    QString hostrr = in.readLine();
+
+                    if(~(hostrr.isEmpty()))
+                         {
+                     qDebug() << hostrr << "+++++++ts++++++++++string+++++++++++++++++++++++++in.readLine" ;
+
+
+
+                      std::string sqsenderv = hostrr.toStdString();
+                      const char * port_namecc   = sqsenderv.c_str();
+
+                      activetape = strdup(port_namecc );
+
+
+                    qDebug() << "activetape= -------++ts+++++++++++++++++++++++++++++++++++-------****************----------" << activetape ;
+
+
+                         }
+                     if((hostrr.isEmpty()))
+                   {
+                        qDebug() << "___file empty_________ts " << tapeslotfilename;
+                    }
+
+
+                }
+
+//--------------v80 replace sqlite by txt
+
+
+            QString txtdbnamepath = activetape +"/db.txt";
+
+                           QFile rhfile80(txtdbnamepath);
+
+                               if (!rhfile80.open(QIODevice::ReadOnly | QIODevice::Text))
+                               {
+
+//                                   QMessageBox msgBox;
+//                                   msgBox.setText("Tape missing. Please select a tape folder.");
+//                                   msgBox.exec();
+
+                                    qDebug() << "..........meta info....db.txt.........!hfile.open...  activetapeNR 1";
+                               }
+                               //
+                               else
+                               {
+                               QTextStream rin(&rhfile80);
+
+
+
+
+
+                                    //while (!rin.atEnd())
+                                        for(int i=1; i<9; i++)
+                                       {
+                                         QString rhostrr = rin.readLine();
+
+
+                                         qDebug() << rhostrr << "+++++++++++++++++line number+++++++++++++in.readLine:  " << i ;
+
+
+                                         if(~(rhostrr.isEmpty()))
+                                              {
+                                          qDebug() << rhostrr << "++++++not+++empty line++++++++string+1++++++activetapeST++++++++++++++++++in.readLine" << i;
+                                 if(i==1)
+                                 {
+                                     getdbLine1=rhostrr;
+
+                                      qDebug() << rhostrr << " getdbLine " << i;
+                                 }
+
+                                 if(i==2)
+                                 {
+                                     getdbLine2=rhostrr;
+                                     qDebug() << rhostrr << " getdbLine " << i;
+                                 }
+
+                                 if(i==3)
+                                 {
+                                     getdbLine3=rhostrr;
+                                     qDebug() << rhostrr << " getdbLine " << i;
+                                 }
+
+                                 if(i==4)
+                                 {
+                                     getdbLine4=rhostrr;
+                                     qDebug() << rhostrr << " getdbLine " << i;
+                                 }
+
+                                 if(i==5)
+                                 {
+                                     getdbLine5=rhostrr;
+                                     qDebug() << rhostrr << " getdbLine " << i;
+                                 }
+
+                                 if(i==6)
+                                 {
+                                     getdbLine6=rhostrr;
+                                     qDebug() << rhostrr << " getdbLine " << i;
+                                 }
+
+                                 if(i==7)
+                                 {
+                                     getdbLine7=rhostrr;
+                                     qDebug() << rhostrr << " getdbLine " << i;
+                                 }
+
+                                 if(i==8)
+                                 {
+                                     getdbLine8=rhostrr;
+                                     qDebug() << rhostrr << " getdbLine " << i;
+                                     qDebug() <<getdbLine8 << "+++++getdbLine8 not+++empty line++++++++string+1++++++activetapeST++++++++++++++++++in.readLine" << i;
+                                 }
+
+
+
+
+                                              }
+
+
+
+
+                                         else
+                                         {
+//                                             QMessageBox msgBox;
+//                                             msgBox.setText("Tape missing. Please select a tape folder.");
+//                                             msgBox.exec();
+                                             qDebug() << "............meta info....db.txt.......!hfile.empty...  activetapeNR 1";
+                                         }
+                                        }
+                               }
+                                rhfile80.close();
+
+
+
+
+//---------------------------
+//v80 removed sqlite
+
+//const QString DRIVER("QSQLITE");
+ //QSqlDatabase db = QSqlDatabase::addDatabase(DRIVER);
+
+
+//  QString dbnamepath = activetape +"/trm8tt_db";
+
+//       //db.setDatabaseName("trm8tt_db");
+//           db.setDatabaseName(dbnamepath);
+
+//       if(!db.open())
+//       {
+//         qWarning() << "SQLite ERROR: " << db.lastError();
+//        }
+
+
+
+
+
+
+//----------------------------
+
+//QSqlQuery queryrsf2ss;
+//        queryrsf2ss.exec("SELECT settingstext FROM settingstable WHERE settings = 'folder';");
+
+//     if(!queryrsf2ss.isActive())
+//            {
+//                    qWarning() << "---------------------sql ERROR: " << queryrsf2ss.lastError().text();
+//            }
+//            if(queryrsf2ss.first())
+//            {
+//                activetape = (queryrsf2ss.value(0).toString());
+//              //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" << (queryrsf2.value(0).toString()) << "trackNRstring:" << trackNRstring;
+//              qDebug() << "activetape= --------------****************----------" << activetape;
+//            }
+//            else
+//            {
+//              qDebug() << ("activetape data not found in db");
+//            }
+
+
+//--------------------------
 
 
    QDir dir(activetape);
@@ -1832,8 +2041,8 @@ QString vol_mapPath = HomePathT + "/GUI_TRM8TT/vol_map";
                             else
                             {
                             QTextStream in(&vhfile);
-                                  while (!in.atEnd())
-                                    {
+                                  //while (!in.atEnd())
+                                   // {
                                       QString vhostrr = in.readLine();
 
                                       if(~(vhostrr.isEmpty()))
@@ -1847,7 +2056,7 @@ QString vol_mapPath = HomePathT + "/GUI_TRM8TT/vol_map";
                                            }
 
 
-                                     }
+                                    // }
                             }
                               vhfile.close();
                  }
@@ -1882,8 +2091,8 @@ QString vol_mapPath = HomePathT + "/GUI_TRM8TT/vol_map";
                                         else
                                         {
                                         QTextStream in(&pvhfile);
-                                              while (!in.atEnd())
-                                                {
+                                              //while (!in.atEnd())
+                                               // {
                                                   QString pvhostrr = in.readLine();
 
                                                   if(~(pvhostrr.isEmpty()))
@@ -1897,7 +2106,7 @@ QString vol_mapPath = HomePathT + "/GUI_TRM8TT/vol_map";
                                                        }
 
 
-                                                 }
+                                                 //}
                                         }
                                           pvhfile.close();
                              }
@@ -2297,34 +2506,94 @@ qDebug() << TrackName << "does not exist, emptytracks:" << emptytracks;
 
  //get rectrack and input from sqlite
 
-QString recvaluestring;
-QString inputsstring;
+//v80 change to txt db
+
+        QString inputsstring;
+        QString recvaluestring;
+
+                       if((trackNR==1)&&(getdbLine1!=""))
+                       {
+
+                        recvaluestring="1";
+                         qDebug() << "  recvaluestring=1 " << trackNR  ;
+                       }
+
+                       if((trackNR==2)&&(getdbLine2!=""))
+                       {
+                         recvaluestring="1";
+                        qDebug() << "  recvaluestring=1 " << trackNR  ;
+                       }
+
+                       if((trackNR==3)&&(getdbLine3!=""))
+                       {
+                         recvaluestring="1";
+                         qDebug() << "  recvaluestring=1 " << trackNR  ;
+                       }
+
+                       if((trackNR==4)&&(getdbLine4!=""))
+                       {
+                          recvaluestring="1";
+                         qDebug() << "  recvaluestring=1 " << trackNR  ;
+                       }
+
+
+                       if((trackNR==5)&&(getdbLine5!=""))
+                       {
+                         recvaluestring="1";
+                          qDebug() << "  recvaluestring=1 " << trackNR  ;
+                       }
+
+                       if((trackNR==6)&&(getdbLine6!=""))
+                       {
+                         recvaluestring="1";
+                          qDebug() << "  recvaluestring=1 " << trackNR  ;
+                       }
+
+                       if((trackNR==7)&&(getdbLine7!=""))
+                       {
+                         recvaluestring="1";
+                          qDebug() << "  recvaluestring=1 " << trackNR  ;
+                       }
+
+                       if((trackNR==8)&&(getdbLine8!=""))
+                       {
+                         recvaluestring="1";
+                          qDebug() << "  recvaluestring=1 " << trackNR  ;
+                       }
+
+
+
+
+//v80 sqlite replaced by txt.db
+
+
+
 
 //trackNR
 
-QString trackNRstring = QString::fromStdString(std::to_string(trackNR));
+//QString trackNRstring = QString::fromStdString(std::to_string(trackNR));
 
-        ////read sql
-             QSqlQuery queryr2;
-             queryr2.exec("SELECT recvalue FROM tracktable WHERE tracknumber = '" + trackNRstring + "';");
-
-
+//        ////read sql
+//             QSqlQuery queryr2;
+//             queryr2.exec("SELECT recvalue FROM tracktable WHERE tracknumber = '" + trackNRstring + "';");
 
 
-            if(!queryr2.isActive())
-            {
-                    qWarning() << "---------------------sql ERROR: " << queryr2.lastError().text();
-            }
-            if(queryr2.first())
-            {
-                recvaluestring = (queryr2.value(0).toString());
-              //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" << (queryr2.value(0).toString()) << "trackNRstring:" << trackNRstring;
-              qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" << recvaluestring << "trackNRstring:" << trackNRstring;
-            }
-            else
-            {
-              qDebug() << ("track data not found in db");
-            }
+
+
+//            if(!queryr2.isActive())
+//            {
+//                    qWarning() << "------SELECT recvalue FROM tracktable WHERE tracknumber ---------------sql ERROR: " << queryr2.lastError().text();
+//            }
+//            if(queryr2.first())
+//            {
+//                recvaluestring = (queryr2.value(0).toString());
+//              //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" << (queryr2.value(0).toString()) << "trackNRstring:" << trackNRstring;
+//              qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" << recvaluestring << "trackNRstring:" << trackNRstring;
+//            }
+//            else
+//            {
+//              qDebug() << ("track data not found in db");
+//            }
 
 
 //if track is empty and marked as recordready, get input selection and prepare rec-chain:
@@ -2334,40 +2603,44 @@ if(recvaluestring=="1")
 
     noinputcombobox=1;
 
-    qDebug() <<  recvaluestring << trackNRstring << "///////////////////////////////////////////////////ready to record";
+   // qDebug() <<  recvaluestring << trackNRstring << "///////////////////////////////////////////////////ready to record";
+       qDebug() <<  recvaluestring << trackNR << "///////////////////////////////////////////////////ready to record";
 
 
 //input
 
 
-    QSqlQuery queryr3;
-    queryr3.exec("SELECT inputs FROM tracktable WHERE tracknumber = '" + trackNRstring + "';");
+//    QSqlQuery queryr3;
+//    queryr3.exec("SELECT inputs FROM tracktable WHERE tracknumber = '" + trackNRstring + "';");
 
 
 
 
-   if(!queryr3.isActive())
-   {
-           qWarning() << "---------------------sql ERROR: " << queryr3.lastError().text();
-   }
-   if(queryr3.first())
-   {
-       inputsstring = (queryr3.value(0).toString());
-     //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" << (queryr2.value(0).toString()) << "trackNRstring:" << trackNRstring;
-     qDebug() << "sql output SELECT inputs FROM tracktable WHERE tracknumber = ------------------------" << inputsstring << "trackNRstring:" << trackNRstring;
-   }
-   else
-   {
-     qDebug() << ("track data not found in db");
-   }
+//   if(!queryr3.isActive())
+//   {
+//           qWarning() << "---------------------sql ERROR: " << queryr3.lastError().text();
+//   }
+//   if(queryr3.first())
+//   {
+//       inputsstring = (queryr3.value(0).toString());
+//     //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" << (queryr2.value(0).toString()) << "trackNRstring:" << trackNRstring;
+//     qDebug() << "sql output SELECT inputs FROM tracktable WHERE tracknumber = ------------------------" << inputsstring << "trackNRstring:" << trackNRstring;
+//   }
+//   else
+//   {
+//     qDebug() << ("track data not found in db");
+//   }
 
 
-   //write inputsstring on top of track in red
+//   write inputsstring on top of track in red
 
+
+
+//   v80 replaced by txt db
 
    if(trackNR==1)
    {
-
+inputsstring=getdbLine1;
    emit red1signal(inputsstring);
 
 
@@ -2376,7 +2649,7 @@ if(recvaluestring=="1")
    if(trackNR==2)
    {
 
-
+inputsstring=getdbLine2;
         emit red2signal(inputsstring);
 
    }
@@ -2384,7 +2657,7 @@ if(recvaluestring=="1")
    if(trackNR==3)
    {
 
-
+inputsstring=getdbLine3;
        emit red3signal(inputsstring);
 
    }
@@ -2392,21 +2665,21 @@ if(recvaluestring=="1")
    if(trackNR==4)
    {
 
-
+inputsstring=getdbLine4;
         emit red4signal(inputsstring);
    }
 
    if(trackNR==5)
    {
 
-
+inputsstring=getdbLine5;
        emit red5signal(inputsstring);
 
    }
 
    if(trackNR==6)
    {
-
+inputsstring=getdbLine6;
      emit red6signal(inputsstring);
 
    }
@@ -2414,7 +2687,7 @@ if(recvaluestring=="1")
    if(trackNR==7)
    {
 
-
+inputsstring=getdbLine7;
       emit red7signal(inputsstring);
 
    }
@@ -2422,7 +2695,7 @@ if(recvaluestring=="1")
    if(trackNR==8)
    {
 
-
+inputsstring=getdbLine8;
      emit red8signal(inputsstring);
 
    }
@@ -2750,6 +3023,13 @@ if (client)
 
      }
 }
+
+
+
+//-----v80
+//db.close();
+
+//-------
 
 
 exec();
@@ -3375,6 +3655,25 @@ void Thread1::pstop()
 
 }
 
+
+
+//wip-80
+
+//void Thread1::recvalue_t8(int recv_t8N)
+
+//{
+//  qDebug() << "recvalue_t8 ..............received in mthread+++++++ " << recv_t8N;
+
+//  //v80
+//       QSqlQuery queryu78;
+//               queryu78.exec("UPDATE tracktable SET recvalue = 1 WHERE id = 8;");
+
+//}
+
+
+
+
+//--w-------
 
 
 

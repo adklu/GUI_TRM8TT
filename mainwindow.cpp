@@ -1,5 +1,7 @@
 
+#include <QString>
 
+QString version_trm8tt = "GUI_TRM8TT v105p by A.D.Klumpp";
 
 
 #include "mainwindow.h"
@@ -7,6 +9,8 @@
 //#include "mythread.h"
 #include <QDebug>
 //#include <eca-control-interface.h>
+
+
 
 #include <QFileDialog>
 
@@ -28,16 +32,18 @@
 #include <QGraphicsView>
 #include <QGraphicsItem>
 
-//sql
-#include <QSqlDatabase>
-#include <QSqlDriver>
-#include <QSqlError>
-#include <QSqlQuery>
+//sql replaced by txt db
+//#include <QSqlDatabase>
+//#include <QSqlDriver>
+//#include <QSqlError>
+//#include <QSqlQuery>
 
 //QSqlDatabase db;
 //QSqlDatabase notesdb;
 
 //alsa
+
+int transportrunning = 0;
 
 int mrid;
 int mrport;
@@ -74,6 +80,28 @@ static int queue;
 
 #include <vector>
 
+QString dbLine1="";
+QString dbLine2="";
+QString dbLine3="";
+QString dbLine4="";
+QString dbLine5="";
+QString dbLine6="";
+QString dbLine7="";
+QString dbLine8="";
+
+
+QString dbNote1="1";
+QString dbNote2="2";
+QString dbNote3="3";
+QString dbNote4="4";
+QString dbNote5="5";
+QString dbNote6="6";
+QString dbNote7="7";
+QString dbNote8="8";
+
+
+QString activetapeST=NULL;
+
 //
 
 int disconandexit = 0;
@@ -90,6 +118,8 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
+    ui->labelversion->setText(version_trm8tt);
 
     //ui->statusBar->setStyleSheet("color: red");
     ui->statusBar->showMessage("Midi Status: Press '>'.");
@@ -380,7 +410,7 @@ QFile chfile1(trm8ttsyspathshe1);
 
   //+++++++++++++++++tape slot
 
-     QString activetapeST;
+     //QString activetapeST;
 
         // QString HomePathT = QDir::homePath();
               QString tapeslotfilename = HomePathT + "/GUI_TRM8TT/trm8tt_tapeslot.txt";
@@ -401,8 +431,8 @@ QFile chfile1(trm8ttsyspathshe1);
                        else
                        {
                        QTextStream rin(&rhfile);
-                            while (!rin.atEnd())
-                               {
+                           // while (!rin.atEnd())
+                               //{
                                  QString rhostrr = rin.readLine();
 
                                  if(~(rhostrr.isEmpty()))
@@ -420,7 +450,7 @@ QFile chfile1(trm8ttsyspathshe1);
                                      msgBox.setText("Tape missing. Please select a tape folder.");
                                      msgBox.exec();
                                  }
-                                }
+                                //}
                        }
                         rhfile.close();
 
@@ -428,152 +458,220 @@ QFile chfile1(trm8ttsyspathshe1);
 //+++++++++++++++++
 //database
 
-    const QString DRIVER("QSQLITE");
-     QSqlDatabase db = QSqlDatabase::addDatabase(DRIVER);
+                        if(activetapeST!=NULL)
+                        {
 
-//     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE","connection1");
-//     QSqlDatabase notesdb = QSqlDatabase::addDatabase("QSQLITE","connection2");
-
-//  db = QSqlDatabase::addDatabase("QSQLITE","connection1");
-// notesdb = QSqlDatabase::addDatabase("QSQLITE","connection2");
+                        //--------------v80 replace sqlite by txt
 
 
-     //QString dbnamepath = HomePathT + "/GUI_TRM8TT/trm8tt_db";
+                                    QString ntxtdbnamepath = activetapeST +"/dbnotes.txt";
 
-      QString dbnamepath = activetapeST +"/trm8tt_db";
+                                                   QFile nrhfile80(ntxtdbnamepath);
 
-           //db.setDatabaseName("trm8tt_db");
-               db.setDatabaseName(dbnamepath);
+                                                       if (!nrhfile80.open(QIODevice::ReadOnly | QIODevice::Text))
+                                                       {
 
-           if(!db.open())
-           {
-             qWarning() << "SQLite ERROR: " << db.lastError();
-            }
+                        //                                   QMessageBox msgBox;
+                        //                                   msgBox.setText("Tape missing. Please select a tape folder.");
+                        //                                   msgBox.exec();
 
-
-//move to tape folder
-//           QString dbnamepath2 = HomePathT + "/GUI_TRM8TT/trm8tt_db2";
-
-//                 //db.setDatabaseName("trm8tt_db");
-//                     notesdb.setDatabaseName(dbnamepath2);
-
-//                 if(!notesdb.open())
-//                 {
-//                   qWarning() << "SQLite 2 ERROR: " << notesdb.lastError();
-//                  }
-
-
-//                 QSqlQuery testquery (notesdb);
-               //  testquery.exec("CREATE TABLE IF NOT EXISTS testtracktable (id INTEGER PRIMARY KEY, testtracknumber INTEGER, testrecvalue INTEGER, testinputs TEXT, testtracknote TEXT)");
-//
-
-
-QSqlQuery query;
-query.exec("CREATE TABLE IF NOT EXISTS tracktable (id INTEGER PRIMARY KEY, tracknumber INTEGER, recvalue INTEGER, inputs TEXT, tracknote TEXT)");
+                                                            qDebug() << "..........meta info....db.txt.........!hfile.open...  activetapeNR 1";
+                                                       }
+                                                       //
+                                                       else
+                                                       {
+                                                       QTextStream nrin(&nrhfile80);
 
 
 
 
 
-   if(!query.isActive())
-       qWarning() << "---------------------sql ERROR: " << query.lastError().text();
+                                                            //while (!rin.atEnd())
+                                                                for(int i=1; i<9; i++)
+                                                               {
+                                                                 QString nrhostrr = nrin.readLine();
+
+
+                                                                 qDebug() << nrhostrr << "+++++++notes++++++++++line number+++++++++++++in.readLine:  " << i ;
+
+
+                                                                 if(~(nrhostrr.isEmpty()))
+                                                                      {
+                                                                  qDebug() << nrhostrr << "++++++not+++empty line++++++++string+1++++++activetapeST++++++notes++++++++++++in.readLine" << i;
+                                                         if(i==1)
+                                                         {
+                                                             dbNote1=nrhostrr;
+
+                                                              qDebug() << nrhostrr << "n getdbLine " << i;
+                                                         }
+
+                                                         if(i==2)
+                                                         {
+                                                             dbNote2=nrhostrr;
+                                                             qDebug() << nrhostrr << "n getdbLine " << i;
+                                                         }
+
+                                                         if(i==3)
+                                                         {
+                                                             dbNote3=nrhostrr;
+                                                             qDebug() << nrhostrr << "n getdbLine " << i;
+                                                         }
+
+                                                         if(i==4)
+                                                         {
+                                                             dbNote4=nrhostrr;
+                                                             qDebug() << nrhostrr << "n getdbLine " << i;
+                                                         }
+
+                                                         if(i==5)
+                                                         {
+                                                             dbNote5=nrhostrr;
+                                                             qDebug() << nrhostrr << "n getdbLine " << i;
+                                                         }
+
+                                                         if(i==6)
+                                                         {
+                                                             dbNote6=nrhostrr;
+                                                             qDebug() << nrhostrr << "n getdbLine " << i;
+                                                         }
+
+                                                         if(i==7)
+                                                         {
+                                                             dbNote7=nrhostrr;
+                                                             qDebug() << nrhostrr << "n getdbLine " << i;
+                                                         }
+
+                                                         if(i==8)
+                                                         {
+                                                             dbNote8=nrhostrr;
+                                                             qDebug() << nrhostrr << "n getdbLine " << i;
+
+                                                         }
 
 
 
-     QSqlQuery query31;
-             query31.exec("INSERT INTO tracktable(id, tracknumber) VALUES(1, 1);");
 
-     QSqlQuery query32;
-             query32.exec("INSERT INTO tracktable(id, tracknumber) VALUES(2, 2);");
-     QSqlQuery query33;
-             query33.exec("INSERT INTO tracktable(id, tracknumber) VALUES(3, 3);");
-     QSqlQuery query34;
-             query34.exec("INSERT INTO tracktable(id, tracknumber) VALUES(4, 4);");
-
-     QSqlQuery query35;
-             query35.exec("INSERT INTO tracktable(id, tracknumber) VALUES(5, 5);");
-     QSqlQuery query36;
-             query36.exec("INSERT INTO tracktable(id, tracknumber) VALUES(6, 6);");
-     QSqlQuery query37;
-             query37.exec("INSERT INTO tracktable(id, tracknumber) VALUES(7, 7);");
-     QSqlQuery query38;
-             query38.exec("INSERT INTO tracktable(id, tracknumber) VALUES(8, 8);");
+                                                                      }
 
 
 
 
+                                                                 else
+                                                                 {
+                        //                                             QMessageBox msgBox;
+                        //                                             msgBox.setText("Tape missing. Please select a tape folder.");
+                        //                                             msgBox.exec();
+                                                                     qDebug() << "............meta info....notesdb.txt.......!hfile.empty...  activetapeNR 1";
+                                                                 }
+                                                                }
+                                                       }
+                                                        nrhfile80.close();
 
-QSqlQuery querys1;
-querys1.exec("CREATE TABLE IF NOT EXISTS settingstable (id INTEGER PRIMARY KEY, settings TEXT, settingstext TEXT, settingsint INTEGER)");
+                     ui->lineEdit->setText(dbNote1);
+                      ui->lineEdit_2->setText(dbNote2);
+                       ui->lineEdit_3->setText(dbNote3);
+                        ui->lineEdit_4->setText(dbNote4);
+                         ui->lineEdit_5->setText(dbNote5);
+                          ui->lineEdit_6->setText(dbNote6);
+                           ui->lineEdit_7->setText(dbNote7);
+                            ui->lineEdit_8->setText(dbNote8);
 
-if(!querys1.isActive())
-    qWarning() << "---------------------sql ERROR: " << querys1.lastError().text();
 
-QSqlQuery querys11;
-querys11.exec("INSERT INTO settingstable(id, settings) VALUES(1, 'mode')");
-QSqlQuery querys12;
-querys12.exec("INSERT INTO settingstable(id, settings) VALUES(2, 'controller')");
-QSqlQuery querys13;
-querys13.exec("INSERT INTO settingstable(id, settings) VALUES(3, 'folder')");
+     }
+          //---------------------v80 remove sqlite
 
-QSqlQuery querys14;
-querys14.exec("INSERT INTO settingstable(id, settings) VALUES(4, 'vol_map')");
-QSqlQuery querys15;
-querys15.exec("INSERT INTO settingstable(id, settings) VALUES(5, 'pan_map')");
+//    const QString DRIVER("QSQLITE");
+//     QSqlDatabase db = QSqlDatabase::addDatabase(DRIVER);
 
-QSqlQuery querys16;
-querys16.exec("INSERT INTO settingstable(id, settings) VALUES(6, 'ff')");
-QSqlQuery querys17;
-querys17.exec("INSERT INTO settingstable(id, settings) VALUES(7, 'rw')");
-QSqlQuery querys18;
-querys18.exec("INSERT INTO settingstable(id, settings) VALUES(8, 'play')");
-QSqlQuery querys19;
-querys19.exec("INSERT INTO settingstable(id, settings) VALUES(9, 'stop')");
-QSqlQuery querys20rtz;
-querys20rtz.exec("INSERT INTO settingstable(id, settings) VALUES(10, 'rtz')");
+
+//      QString dbnamepath = activetapeST +"/trm8tt_db";
+
+
+//               db.setDatabaseName(dbnamepath);
+
+//           if(!db.open())
+//           {
+//             qWarning() << "SQLite ERROR: " << db.lastError();
+//            }
+
+
+
+
+//QSqlQuery query;
+//query.exec("CREATE TABLE IF NOT EXISTS tracktable (id INTEGER PRIMARY KEY, tracknumber INTEGER, recvalue INTEGER, inputs TEXT, tracknote TEXT)");
 
 
 
 
 
-////read sql
-//     QSqlQuery query2("SELECT tracknumber FROM tracktable WHERE id = 8");
-//    if(!query2.isActive())
-//            qWarning() << "---------------------sql ERROR: " << query2.lastError().text();
-
-//    if(query2.first())
-//      qDebug() << "sql output ------------------------" << (query2.value(0).toString());
-//    else
-//      qDebug() << ("track data not found in db");
+//   if(!query.isActive())
+//       qWarning() << "---------------------sql ERROR: " << query.lastError().text();
 
 
-////update db
- // QSqlQuery query39("UPDATE tracktable SET recvalue = 1 WHERE id = 7;");
+
+//     QSqlQuery query31;
+//             query31.exec("INSERT INTO tracktable(id, tracknumber) VALUES(1, 1);");
+
+//     QSqlQuery query32;
+//             query32.exec("INSERT INTO tracktable(id, tracknumber) VALUES(2, 2);");
+//     QSqlQuery query33;
+//             query33.exec("INSERT INTO tracktable(id, tracknumber) VALUES(3, 3);");
+//     QSqlQuery query34;
+//             query34.exec("INSERT INTO tracktable(id, tracknumber) VALUES(4, 4);");
+
+//     QSqlQuery query35;
+//             query35.exec("INSERT INTO tracktable(id, tracknumber) VALUES(5, 5);");
+//     QSqlQuery query36;
+//             query36.exec("INSERT INTO tracktable(id, tracknumber) VALUES(6, 6);");
+//     QSqlQuery query37;
+//             query37.exec("INSERT INTO tracktable(id, tracknumber) VALUES(7, 7);");
+//     QSqlQuery query38;
+//             query38.exec("INSERT INTO tracktable(id, tracknumber) VALUES(8, 8);");
+
+
+
+
+
+//QSqlQuery querys1;
+//querys1.exec("CREATE TABLE IF NOT EXISTS settingstable (id INTEGER PRIMARY KEY, settings TEXT, settingstext TEXT, settingsint INTEGER)");
+
+//if(!querys1.isActive())
+//    qWarning() << "---------------------sql ERROR: " << querys1.lastError().text();
+
+//QSqlQuery querys11;
+//querys11.exec("INSERT INTO settingstable(id, settings) VALUES(1, 'mode')");
+//QSqlQuery querys12;
+//querys12.exec("INSERT INTO settingstable(id, settings) VALUES(2, 'controller')");
+//QSqlQuery querys13;
+//querys13.exec("INSERT INTO settingstable(id, settings) VALUES(3, 'folder')");
+
+//QSqlQuery querys14;
+//querys14.exec("INSERT INTO settingstable(id, settings) VALUES(4, 'vol_map')");
+//QSqlQuery querys15;
+//querys15.exec("INSERT INTO settingstable(id, settings) VALUES(5, 'pan_map')");
+
+//QSqlQuery querys16;
+//querys16.exec("INSERT INTO settingstable(id, settings) VALUES(6, 'ff')");
+//QSqlQuery querys17;
+//querys17.exec("INSERT INTO settingstable(id, settings) VALUES(7, 'rw')");
+//QSqlQuery querys18;
+//querys18.exec("INSERT INTO settingstable(id, settings) VALUES(8, 'play')");
+//QSqlQuery querys19;
+//querys19.exec("INSERT INTO settingstable(id, settings) VALUES(9, 'stop')");
+//QSqlQuery querys20rtz;
+//querys20rtz.exec("INSERT INTO settingstable(id, settings) VALUES(10, 'rtz')");
+
+
+
 
 QString sTapeFolder=activetapeST;
 
 
 
-QSqlQuery query39tfolder1;
-        query39tfolder1.exec("UPDATE settingstable SET settingstext = '" + sTapeFolder + "' WHERE id = 3;");
+//QSqlQuery query39tfolder1;
+//        query39tfolder1.exec("UPDATE settingstable SET settingstext = '" + sTapeFolder + "' WHERE id = 3;");
 
-//QSqlQuery queryrsf2ss;
-//queryrsf2ss.exec("SELECT settingstext FROM settingstable WHERE settings = 'folder';");
 
-//     if(!queryrsf2ss.isActive())
-//            {
-//                    qWarning() << "---------------------sql ERROR: " << queryrsf2ss.lastError().text();
-//            }
-//            if(queryrsf2ss.first())
-//            {
-//                sTapeFolder = (queryrsf2ss.value(0).toString());
-//              //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" << (queryrsf2.value(0).toString()) << "trackNRstring:" << trackNRstring;
-//              qDebug() << "sTapeFolder= ------------------------" << sTapeFolder;
-//            }
-//            else
-//            {
-//              qDebug() << ("sTapeFolder data not found in db");
-//            }
 
 
  ui->label_file->setText(sTapeFolder);
@@ -587,199 +685,205 @@ QSqlQuery query39tfolder1;
 }
 
 
- //QSqlQuery querys1addcol("ALTER TABLE tracktable ADD COLUMN IF NOT EXISTS '" + sTapeFolder + "' TEXT");
 
+
+
+
+//v80 sqlite replaced by txt db
+ //------------------------------------------------------------------------
 //tracknotes
 
- QString  n1string;
 
- QSqlQuery n1queryr2;
- n1queryr2.exec("SELECT tracknote FROM tracktable WHERE tracknumber = 1;");
 
-if(!n1queryr2.isActive())
-{
-        qWarning() << "---------------------sql ERROR: " << n1queryr2.lastError().text();
-}
-if(n1queryr2.first())
-{
-    n1string = (n1queryr2.value(0).toString());
-  //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" << (queryr2.value(0).toString()) << "trackNRstring:" << trackNRstring;
-   //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" <<  n1string  << "trackNRstring:" ;
-}
-else
-{
-  qDebug() << ("track data not found in db");
-}
+// QString  n1string;
 
-ui->lineEdit->setText(n1string);
+// QSqlQuery n1queryr2;
+// n1queryr2.exec("SELECT tracknote FROM tracktable WHERE tracknumber = 1;");
 
-//--2
+//if(!n1queryr2.isActive())
+//{
+//        qWarning() << "---------------------sql ERROR: " << n1queryr2.lastError().text();
+//}
+//if(n1queryr2.first())
+//{
+//    n1string = (n1queryr2.value(0).toString());
+//  //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" << (queryr2.value(0).toString()) << "trackNRstring:" << trackNRstring;
+//   //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" <<  n1string  << "trackNRstring:" ;
+//}
+//else
+//{
+//  qDebug() << ("track data not found in db");
+//}
 
-QString  n2string;
+//ui->lineEdit->setText(n1string);
 
-QSqlQuery n2queryr2;
-n2queryr2.exec("SELECT tracknote FROM tracktable WHERE tracknumber = 2;");
+////--2
 
-if(!n2queryr2.isActive())
-{
-       qWarning() << "---------------------sql ERROR: " << n2queryr2.lastError().text();
-}
-if(n2queryr2.first())
-{
-   n2string = (n2queryr2.value(0).toString());
- //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" << (queryr2.value(0).toString()) << "trackNRstring:" << trackNRstring;
-  //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" <<  n2string  << "trackNRstring:" ;
-}
-else
-{
- qDebug() << ("track data not found in db");
-}
+//QString  n2string;
 
-ui->lineEdit_2->setText(n2string);
+//QSqlQuery n2queryr2;
+//n2queryr2.exec("SELECT tracknote FROM tracktable WHERE tracknumber = 2;");
 
-//3
+//if(!n2queryr2.isActive())
+//{
+//       qWarning() << "---------------------sql ERROR: " << n2queryr2.lastError().text();
+//}
+//if(n2queryr2.first())
+//{
+//   n2string = (n2queryr2.value(0).toString());
+// //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" << (queryr2.value(0).toString()) << "trackNRstring:" << trackNRstring;
+//  //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" <<  n2string  << "trackNRstring:" ;
+//}
+//else
+//{
+// qDebug() << ("track data not found in db");
+//}
 
-QString  n3string;
+//ui->lineEdit_2->setText(n2string);
 
-QSqlQuery n3queryr2;
-n3queryr2.exec("SELECT tracknote FROM tracktable WHERE tracknumber = 3;");
+////3
 
-if(!n3queryr2.isActive())
-{
-       qWarning() << "---------------------sql ERROR: " << n3queryr2.lastError().text();
-}
-if(n3queryr2.first())
-{
-   n3string = (n3queryr2.value(0).toString());
- //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" << (queryr2.value(0).toString()) << "trackNRstring:" << trackNRstring;
-  //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" <<  n1string  << "trackNRstring:" ;
-}
-else
-{
- qDebug() << ("track data not found in db");
-}
+//QString  n3string;
 
-ui->lineEdit_3->setText(n3string);
+//QSqlQuery n3queryr2;
+//n3queryr2.exec("SELECT tracknote FROM tracktable WHERE tracknumber = 3;");
 
-//4
+//if(!n3queryr2.isActive())
+//{
+//       qWarning() << "---------------------sql ERROR: " << n3queryr2.lastError().text();
+//}
+//if(n3queryr2.first())
+//{
+//   n3string = (n3queryr2.value(0).toString());
+// //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" << (queryr2.value(0).toString()) << "trackNRstring:" << trackNRstring;
+//  //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" <<  n1string  << "trackNRstring:" ;
+//}
+//else
+//{
+// qDebug() << ("track data not found in db");
+//}
 
-QString  n4string;
+//ui->lineEdit_3->setText(n3string);
 
-QSqlQuery n4queryr2;
-n4queryr2.exec("SELECT tracknote FROM tracktable WHERE tracknumber = 4;");
+////4
 
-if(!n4queryr2.isActive())
-{
-       qWarning() << "---------------------sql ERROR: " << n4queryr2.lastError().text();
-}
-if(n4queryr2.first())
-{
-   n4string = (n4queryr2.value(0).toString());
- //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" << (queryr2.value(0).toString()) << "trackNRstring:" << trackNRstring;
-  //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" <<  n1string  << "trackNRstring:" ;
-}
-else
-{
- qDebug() << ("track data not found in db");
-}
+//QString  n4string;
 
-ui->lineEdit_4->setText(n4string);
+//QSqlQuery n4queryr2;
+//n4queryr2.exec("SELECT tracknote FROM tracktable WHERE tracknumber = 4;");
 
-//5
+//if(!n4queryr2.isActive())
+//{
+//       qWarning() << "---------------------sql ERROR: " << n4queryr2.lastError().text();
+//}
+//if(n4queryr2.first())
+//{
+//   n4string = (n4queryr2.value(0).toString());
+// //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" << (queryr2.value(0).toString()) << "trackNRstring:" << trackNRstring;
+//  //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" <<  n1string  << "trackNRstring:" ;
+//}
+//else
+//{
+// qDebug() << ("track data not found in db");
+//}
 
-QString  n5string;
+//ui->lineEdit_4->setText(n4string);
 
-QSqlQuery n5queryr2;
-n5queryr2.exec("SELECT tracknote FROM tracktable WHERE tracknumber = 5;");
+////5
 
-if(!n5queryr2.isActive())
-{
-       qWarning() << "---------------------sql ERROR: " << n5queryr2.lastError().text();
-}
-if(n5queryr2.first())
-{
-   n5string = (n5queryr2.value(0).toString());
- //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" << (queryr2.value(0).toString()) << "trackNRstring:" << trackNRstring;
-  //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" <<  n1string  << "trackNRstring:" ;
-}
-else
-{
- qDebug() << ("track data not found in db");
-}
+//QString  n5string;
 
-ui->lineEdit_5->setText(n5string);
+//QSqlQuery n5queryr2;
+//n5queryr2.exec("SELECT tracknote FROM tracktable WHERE tracknumber = 5;");
 
-//6
+//if(!n5queryr2.isActive())
+//{
+//       qWarning() << "---------------------sql ERROR: " << n5queryr2.lastError().text();
+//}
+//if(n5queryr2.first())
+//{
+//   n5string = (n5queryr2.value(0).toString());
+// //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" << (queryr2.value(0).toString()) << "trackNRstring:" << trackNRstring;
+//  //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" <<  n1string  << "trackNRstring:" ;
+//}
+//else
+//{
+// qDebug() << ("track data not found in db");
+//}
 
-QString  n6string;
+//ui->lineEdit_5->setText(n5string);
 
-QSqlQuery n6queryr2;
-n6queryr2.exec("SELECT tracknote FROM tracktable WHERE tracknumber = 6;");
+////6
 
-if(!n6queryr2.isActive())
-{
-       qWarning() << "---------------------sql ERROR: " << n6queryr2.lastError().text();
-}
-if(n6queryr2.first())
-{
-   n6string = (n6queryr2.value(0).toString());
- //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" << (queryr2.value(0).toString()) << "trackNRstring:" << trackNRstring;
-  //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" <<  n1string  << "trackNRstring:" ;
-}
-else
-{
- qDebug() << ("track data not found in db");
-}
+//QString  n6string;
 
-ui->lineEdit_6->setText(n6string);
+//QSqlQuery n6queryr2;
+//n6queryr2.exec("SELECT tracknote FROM tracktable WHERE tracknumber = 6;");
 
-//7
+//if(!n6queryr2.isActive())
+//{
+//       qWarning() << "---------------------sql ERROR: " << n6queryr2.lastError().text();
+//}
+//if(n6queryr2.first())
+//{
+//   n6string = (n6queryr2.value(0).toString());
+// //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" << (queryr2.value(0).toString()) << "trackNRstring:" << trackNRstring;
+//  //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" <<  n1string  << "trackNRstring:" ;
+//}
+//else
+//{
+// qDebug() << ("track data not found in db");
+//}
 
-QString  n7string;
+//ui->lineEdit_6->setText(n6string);
 
-QSqlQuery n7queryr2;
-n7queryr2.exec("SELECT tracknote FROM tracktable WHERE tracknumber = 7;");
+////7
 
-if(!n7queryr2.isActive())
-{
-       qWarning() << "---------------------sql ERROR: " << n7queryr2.lastError().text();
-}
-if(n7queryr2.first())
-{
-   n7string = (n7queryr2.value(0).toString());
- //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" << (queryr2.value(0).toString()) << "trackNRstring:" << trackNRstring;
-  //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" <<  n1string  << "trackNRstring:" ;
-}
-else
-{
- qDebug() << ("track data not found in db");
-}
+//QString  n7string;
 
-ui->lineEdit_7->setText(n7string);
+//QSqlQuery n7queryr2;
+//n7queryr2.exec("SELECT tracknote FROM tracktable WHERE tracknumber = 7;");
 
-//8
+//if(!n7queryr2.isActive())
+//{
+//       qWarning() << "---------------------sql ERROR: " << n7queryr2.lastError().text();
+//}
+//if(n7queryr2.first())
+//{
+//   n7string = (n7queryr2.value(0).toString());
+// //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" << (queryr2.value(0).toString()) << "trackNRstring:" << trackNRstring;
+//  //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" <<  n1string  << "trackNRstring:" ;
+//}
+//else
+//{
+// qDebug() << ("track data not found in db");
+//}
 
-QString  n8string;
+//ui->lineEdit_7->setText(n7string);
 
-QSqlQuery n8queryr2;
-n8queryr2.exec("SELECT tracknote FROM tracktable WHERE tracknumber = 8;");
+////8
 
-if(!n8queryr2.isActive())
-{
-       qWarning() << "---------------------sql ERROR: " << n8queryr2.lastError().text();
-}
-if(n8queryr2.first())
-{
-   n8string = (n8queryr2.value(0).toString());
- //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" << (queryr2.value(0).toString()) << "trackNRstring:" << trackNRstring;
-  //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" <<  n1string  << "trackNRstring:" ;
-}
-else
-{
- qDebug() << ("track data not found in db");
-}
+//QString  n8string;
 
-ui->lineEdit_8->setText(n8string);
+//QSqlQuery n8queryr2;
+//n8queryr2.exec("SELECT tracknote FROM tracktable WHERE tracknumber = 8;");
+
+//if(!n8queryr2.isActive())
+//{
+//       qWarning() << "---------------------sql ERROR: " << n8queryr2.lastError().text();
+//}
+//if(n8queryr2.first())
+//{
+//   n8string = (n8queryr2.value(0).toString());
+// //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" << (queryr2.value(0).toString()) << "trackNRstring:" << trackNRstring;
+//  //qDebug() << "sql output SELECT recvalue FROM tracktable WHERE tracknumber = ------------------------" <<  n1string  << "trackNRstring:" ;
+//}
+//else
+//{
+// qDebug() << ("track data not found in db");
+//}
+
+//ui->lineEdit_8->setText(n8string);
 
 //
 
@@ -787,6 +891,8 @@ ui->lineEdit_8->setText(n8string);
 
 
 //database end
+//--------------------------------------------------------------------
+
 
 
 
@@ -815,10 +921,14 @@ ui->lineEdit_8->setText(n8string);
 //connect(mThread,SIGNAL(possignal(int)), this, SLOT(valueGot(int)));
 
 
-
+//
  //connect(this,SIGNAL(signalValueUpdated(int)),mThread, SLOT(valueChanged1(int)));
  connect(this,SIGNAL(signalValueUpdated(int)),mThread, SLOT(rewind(int searchvalue)));
  connect(this,SIGNAL(signalValueUpdated(int)),mThread, SLOT(forward(int searchvalue)));
+
+ //--wip-v80
+  //connect(this,SIGNAL(signalRecValue_t8(int)),mThread, SLOT(recvalue_t8(int recv_t8)));
+  //emit signalRecValue_t8(recv_t8));
 
   //
 
@@ -1050,8 +1160,8 @@ QString HomePathT = QDir::homePath();
 
                    //sql
 
-                   QSqlQuery query39savem;
-                           query39savem.exec("UPDATE settingstable SET settingstext = '" + getclient2 + "' WHERE id = 2;");
+//                   QSqlQuery query39savem;
+//                           query39savem.exec("UPDATE settingstable SET settingstext = '" + getclient2 + "' WHERE id = 2;");
 
 
 
@@ -1080,8 +1190,8 @@ void MainWindow::recbuttonslot()
           qDebug() << "add track 1 to rec list -> sql";
 
           //update db
-                QSqlQuery queryu71;
-                        queryu71.exec("UPDATE tracktable SET recvalue = 1 WHERE id = 1;");
+//                QSqlQuery queryu71;
+//                        queryu71.exec("UPDATE tracktable SET recvalue = 1 WHERE id = 1;");
 
     }
 
@@ -1092,8 +1202,8 @@ void MainWindow::recbuttonslot()
           qDebug() << "add track 2 to rec list -> sql";
 
           //update db
-                QSqlQuery queryu72;
-                        queryu72.exec("UPDATE tracktable SET recvalue = 1 WHERE id = 2;");
+//                QSqlQuery queryu72;
+//                        queryu72.exec("UPDATE tracktable SET recvalue = 1 WHERE id = 2;");
 
     }
 
@@ -1104,8 +1214,8 @@ void MainWindow::recbuttonslot()
           qDebug() << "add track 3 to rec list -> sql";
 
           //update db
-                QSqlQuery queryu73;
-                        queryu73.exec("UPDATE tracktable SET recvalue = 1 WHERE id = 3;");
+//                QSqlQuery queryu73;
+//                        queryu73.exec("UPDATE tracktable SET recvalue = 1 WHERE id = 3;");
 
     }
 
@@ -1116,8 +1226,8 @@ void MainWindow::recbuttonslot()
           qDebug() << "add track 4 to rec list -> sql";
 
           //update db
-                QSqlQuery queryu74;
-                        queryu74.exec("UPDATE tracktable SET recvalue = 1 WHERE id = 4;");
+//                QSqlQuery queryu74;
+//                        queryu74.exec("UPDATE tracktable SET recvalue = 1 WHERE id = 4;");
 
     }
 
@@ -1128,8 +1238,8 @@ void MainWindow::recbuttonslot()
           qDebug() << "add track 5 to rec list -> sql";
 
           //update db
-                QSqlQuery queryu75;
-                        queryu75.exec("UPDATE tracktable SET recvalue = 1 WHERE id = 5;");
+//                QSqlQuery queryu75;
+//                        queryu75.exec("UPDATE tracktable SET recvalue = 1 WHERE id = 5;");
 
     }
 
@@ -1140,8 +1250,8 @@ void MainWindow::recbuttonslot()
           qDebug() << "add track 6 to rec list -> sql";
 
           //update db
-                QSqlQuery queryu76;
-                        queryu76.exec("UPDATE tracktable SET recvalue = 1 WHERE id = 6;");
+//                QSqlQuery queryu76;
+//                        queryu76.exec("UPDATE tracktable SET recvalue = 1 WHERE id = 6;");
 
     }
 
@@ -1152,8 +1262,8 @@ void MainWindow::recbuttonslot()
           qDebug() << "add track 7 to rec list -> sql";
 
           //update db
-                QSqlQuery queryu71;
-                        queryu71.exec("UPDATE tracktable SET recvalue = 1 WHERE id = 7;");
+//                QSqlQuery queryu71;
+//                        queryu71.exec("UPDATE tracktable SET recvalue = 1 WHERE id = 7;");
 
     }
 
@@ -1161,24 +1271,53 @@ void MainWindow::recbuttonslot()
     {
        getinput8();
 
-          qDebug() << "add track 8 to rec list -> sql";
+
+
+          //wip-v80-to-remove
+//          int recv_t8=1;
+//          emit signalRecValue_t8(recv_t8);
+//          mThread->recvalue_t8(recv_t8);
+
+
+           qDebug() << " sending to mthread: add track 8 to rec list -> sql";
 
           //update db
-                QSqlQuery queryu78;
-                        queryu78.exec("UPDATE tracktable SET recvalue = 1 WHERE id = 8;");
+
+          //v80
+               // QSqlQuery queryu78;
+                      //  queryu78.exec("UPDATE tracktable SET recvalue = 1 WHERE id = 8;");
+
+
+
+
+//---------------------------------------------
 
     }
 
  if((ui->checkBox_1->isChecked())||(ui->checkBox_2->isChecked())||(ui->checkBox_3->isChecked())||(ui->checkBox_4->isChecked())||(ui->checkBox_5->isChecked())||(ui->checkBox_6->isChecked())||(ui->checkBox_7->isChecked())||(ui->checkBox_8->isChecked()))
 {
 //     QMessageBox msgBox;
-//     msgBox.setText("Changing to RECORDING MODE...relax");
+//     msgBox.setText("Changing to RECORDING MODE...");
 //     msgBox.exec();
 
 
      if (QMessageBox::Yes == QMessageBox::question(this, "GUI_TRM8TT", "Changing to RECORDING MODE...?", QMessageBox::Yes | QMessageBox::No))
         {
-           mThread->restart_slot();
+
+         writedb();
+         writenotedb();
+
+         //test v80: replacing sqlite with txt file
+//v80-------------------------------------------
+
+         //QString HomePathT = QDir::homePath();
+              //QString tapeslotfilename = HomePathT + "/GUI_TRM8TT/trm8tt_armslot.txt";
+
+
+//--------
+
+         sleep(1);
+    mThread->restart_slot();
 
         }
 
@@ -1212,24 +1351,40 @@ void MainWindow::nonrecbuttonslot()
 
 
 
-     QSqlQuery queryusetallnull1;
-             queryusetallnull1.exec("UPDATE tracktable SET recvalue = 0 WHERE id = 1;");
-         QSqlQuery queryusetallnull2;
-                 queryusetallnull2.exec("UPDATE tracktable SET recvalue = 0 WHERE id = 2;");
-             QSqlQuery queryusetallnull3;
-                     queryusetallnull3.exec("UPDATE tracktable SET recvalue = 0 WHERE id = 3;");
-                 QSqlQuery queryusetallnull4;
-                         queryusetallnull4.exec("UPDATE tracktable SET recvalue = 0 WHERE id = 4;");
+     dbLine1="";
+     dbLine2="";
+     dbLine3="";
+     dbLine4="";
+     dbLine5="";
+     dbLine6="";
+     dbLine7="";
+     dbLine8="";
 
-                     QSqlQuery queryusetallnull5;
-                             queryusetallnull5.exec("UPDATE tracktable SET recvalue = 0 WHERE id = 5;");
-                         QSqlQuery queryusetallnull6;
-                                 queryusetallnull6.exec("UPDATE tracktable SET recvalue = 0 WHERE id = 6;");
-                             QSqlQuery queryusetallnull7;
-                                     queryusetallnull7.exec("UPDATE tracktable SET recvalue = 0 WHERE id = 7;");
-                                 QSqlQuery queryusetallnull8;
-                                         queryusetallnull8.exec("UPDATE tracktable SET recvalue = 0 WHERE id = 8;");
 
+     //v80 sql->txt
+//     QSqlQuery queryusetallnull1;
+//             queryusetallnull1.exec("UPDATE tracktable SET recvalue = 0 WHERE id = 1;");
+//         QSqlQuery queryusetallnull2;
+//                 queryusetallnull2.exec("UPDATE tracktable SET recvalue = 0 WHERE id = 2;");
+//             QSqlQuery queryusetallnull3;
+//                     queryusetallnull3.exec("UPDATE tracktable SET recvalue = 0 WHERE id = 3;");
+//                 QSqlQuery queryusetallnull4;
+//                         queryusetallnull4.exec("UPDATE tracktable SET recvalue = 0 WHERE id = 4;");
+
+//                     QSqlQuery queryusetallnull5;
+//                             queryusetallnull5.exec("UPDATE tracktable SET recvalue = 0 WHERE id = 5;");
+//                         QSqlQuery queryusetallnull6;
+//                                 queryusetallnull6.exec("UPDATE tracktable SET recvalue = 0 WHERE id = 6;");
+//                             QSqlQuery queryusetallnull7;
+//                                     queryusetallnull7.exec("UPDATE tracktable SET recvalue = 0 WHERE id = 7;");
+//                                 QSqlQuery queryusetallnull8;
+//                                         queryusetallnull8.exec("UPDATE tracktable SET recvalue = 0 WHERE id = 8;");
+
+
+
+                                         //save all notes
+                                         writenotedb();
+                                         writedb();
 
 //                                         QMessageBox msgBox;
 //                                         msgBox.setText("Changing to PLAYBACK MODE...relax");
@@ -1257,6 +1412,7 @@ void MainWindow::getinput1()
 {
    // int getinput7int = ui->comboBox_7->currentIndex();
      QString getinput1 = ui->comboBox->currentText();
+       dbLine1=getinput1;
 
 
             //QString getinput7 =  fullAr[getinput7int];
@@ -1265,8 +1421,8 @@ void MainWindow::getinput1()
 
                 qDebug() << "getinput1 -> sql" << getinput1;
 
-                 QSqlQuery queryu11;
-                         queryu11.exec("UPDATE tracktable SET inputs = '" + getinput1 + "' WHERE id = 1;");
+                // QSqlQuery queryu11;
+                        // queryu11.exec("UPDATE tracktable SET inputs = '" + getinput1 + "' WHERE id = 1;");
 
 
 
@@ -1276,6 +1432,7 @@ void MainWindow::getinput2()
 {
    // int getinput7int = ui->comboBox_7->currentIndex();
      QString getinput2 = ui->comboBox_2->currentText();
+       dbLine2=getinput2;
 
 
             //QString getinput7 =  fullAr[getinput7int];
@@ -1284,8 +1441,8 @@ void MainWindow::getinput2()
 
                 qDebug() << "getinput2 -> sql" << getinput2;
 
-                 QSqlQuery queryu12;
-                         queryu12.exec("UPDATE tracktable SET inputs = '" + getinput2 + "' WHERE id = 2;");
+                 //QSqlQuery queryu12;
+                       //  queryu12.exec("UPDATE tracktable SET inputs = '" + getinput2 + "' WHERE id = 2;");
 
 
 
@@ -1295,6 +1452,7 @@ void MainWindow::getinput3()
 {
    // int getinput7int = ui->comboBox_7->currentIndex();
      QString getinput3 = ui->comboBox_3->currentText();
+       dbLine3=getinput3;
 
 
             //QString getinput7 =  fullAr[getinput7int];
@@ -1303,10 +1461,10 @@ void MainWindow::getinput3()
 
                 qDebug() << "getinput3 -> sql" << getinput3;
 
-                 QSqlQuery queryu13;
-                         queryu13.exec("UPDATE tracktable SET inputs = '" + getinput3 + "' WHERE id = 3;");
+                 //QSqlQuery queryu13;
+                       //  queryu13.exec("UPDATE tracktable SET inputs = '" + getinput3 + "' WHERE id = 3;");
 
-//QString query_string = "UPDATE tracktable SET inputs = '" + getinput7 + "' WHERE id = 7;";
+
 
 }
 
@@ -1314,6 +1472,7 @@ void MainWindow::getinput4()
 {
    // int getinput7int = ui->comboBox_7->currentIndex();
      QString getinput4 = ui->comboBox_4->currentText();
+       dbLine4=getinput4;
 
 
             //QString getinput7 =  fullAr[getinput7int];
@@ -1322,8 +1481,8 @@ void MainWindow::getinput4()
 
                 qDebug() << "getinpu4t4-> sql" << getinput4;
 
-                 QSqlQuery queryu14;
-                         queryu14.exec("UPDATE tracktable SET inputs = '" + getinput4 + "' WHERE id = 4;");
+                // QSqlQuery queryu14;
+                        // queryu14.exec("UPDATE tracktable SET inputs = '" + getinput4 + "' WHERE id = 4;");
 
 
 
@@ -1333,6 +1492,7 @@ void MainWindow::getinput5()
 {
    // int getinput7int = ui->comboBox_7->currentIndex();
      QString getinput5 = ui->comboBox_5->currentText();
+       dbLine5=getinput5;
 
 
             //QString getinput7 =  fullAr[getinput7int];
@@ -1341,10 +1501,10 @@ void MainWindow::getinput5()
 
                 qDebug() << "getinput5 -> sql" << getinput5;
 
-                 QSqlQuery queryu15;
-                         queryu15.exec("UPDATE tracktable SET inputs = '" + getinput5 + "' WHERE id = 5;");
+                // QSqlQuery queryu15;
+                         //queryu15.exec("UPDATE tracktable SET inputs = '" + getinput5 + "' WHERE id = 5;");
 
-//QString query_string = "UPDATE tracktable SET inputs = '" + getinput7 + "' WHERE id = 7;";
+
 
 }
 
@@ -1352,6 +1512,7 @@ void MainWindow::getinput6()
 {
    // int getinput7int = ui->comboBox_7->currentIndex();
      QString getinput6 = ui->comboBox_6->currentText();
+       dbLine6=getinput6;
 
 
             //QString getinput7 =  fullAr[getinput7int];
@@ -1360,10 +1521,10 @@ void MainWindow::getinput6()
 
                 qDebug() << "getinput6 -> sql" << getinput6;
 
-                 QSqlQuery queryu16;
-                         queryu16.exec("UPDATE tracktable SET inputs = '" + getinput6 + "' WHERE id = 6;");
+                 //QSqlQuery queryu16;
+                       //  queryu16.exec("UPDATE tracktable SET inputs = '" + getinput6 + "' WHERE id = 6;");
 
-//QString query_string = "UPDATE tracktable SET inputs = '" + getinput7 + "' WHERE id = 7;";
+
 
 }
 
@@ -1371,6 +1532,7 @@ void MainWindow::getinput7()
 {
    // int getinput7int = ui->comboBox_7->currentIndex();
      QString getinput7 = ui->comboBox_7->currentText();
+       dbLine7=getinput7;
 
 
             //QString getinput7 =  fullAr[getinput7int];
@@ -1379,10 +1541,10 @@ void MainWindow::getinput7()
 
                 qDebug() << "getinput7 -> sql" << getinput7;
 
-                 QSqlQuery queryu73;
-                         queryu73.exec("UPDATE tracktable SET inputs = '" + getinput7 + "' WHERE id = 7;");
+                 //QSqlQuery queryu73;
+                         //queryu73.exec("UPDATE tracktable SET inputs = '" + getinput7 + "' WHERE id = 7;");
 
-//QString query_string = "UPDATE tracktable SET inputs = '" + getinput7 + "' WHERE id = 7;";
+
 
 }
 
@@ -1390,6 +1552,7 @@ void MainWindow::getinput8()
 {
    // int getinput7int = ui->comboBox_7->currentIndex();
      QString getinput8 = ui->comboBox_8->currentText();
+     dbLine8=getinput8;
 
 
             //QString getinput7 =  fullAr[getinput7int];
@@ -1398,10 +1561,11 @@ void MainWindow::getinput8()
 
                 qDebug() << "getinput8 -> sql" << getinput8;
 
-                 QSqlQuery queryu18;
-                         queryu18.exec("UPDATE tracktable SET inputs = '" + getinput8 + "' WHERE id = 8;");
+                //v80, remove sqlite
+                 //QSqlQuery queryu18;
+                         //queryu18.exec("UPDATE tracktable SET inputs = '" + getinput8 + "' WHERE id = 8;");
 
-//QString query_string = "UPDATE tracktable SET inputs = '" + getinput7 + "' WHERE id = 7;";
+
 
 }
 
@@ -1419,6 +1583,19 @@ void MainWindow::closeEvent(QCloseEvent *event)
 event->ignore();
     if (QMessageBox::Yes == QMessageBox::question(this, "GUI_TRM8TT", "Disconnect and Exit?", QMessageBox::Yes | QMessageBox::No))
     {
+        dbLine1="";
+        dbLine2="";
+        dbLine3="";
+        dbLine4="";
+        dbLine5="";
+        dbLine6="";
+        dbLine7="";
+        dbLine8="";
+
+        writedb();
+        writenotedb();
+        sleep(1);
+
        mThread->exitslot();
         event->accept();
 
@@ -1428,7 +1605,7 @@ event->ignore();
     if (disconandexit==1)
     {
     {
-             qDebug() << "closeevvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvent" ;
+             qDebug() << "close event" ;
         mThread->exitslot();
         event->accept();
     }
@@ -1795,7 +1972,8 @@ void MainWindow::valueGot(int timevalue)
 
 void MainWindow::resetslot()
 {
-
+    if(transportrunning==1)
+    {
 ////    QString nfile( ui->lineEdit->toPlainText())   ;
 //   // qDebug() << nfile;
 
@@ -1803,10 +1981,14 @@ mThread->reset();
 
 //        //ui->StartButton->setVisible(false);
 }
+}
 
 
 void MainWindow::stopslot()
 {
+
+    if(transportrunning==1)
+    {
 // QPalette palette;
 // palette.setColor(QPalette::Window, Qt::white);
 // palette.setColor(QPalette::WindowText, Qt::blue);
@@ -1819,7 +2001,7 @@ void MainWindow::stopslot()
 
      //rectangle->setPos(0, 0);
 
-
+}
 
 }
 
@@ -1830,6 +2012,8 @@ void MainWindow::stopslot()
 
 void MainWindow::rewindslot()
 {
+    if(transportrunning==1)
+    {
 
   int searchvalue = ui->spinBox->value();
 qDebug() << "searchvalueRR:::::::::::::::::::::::::::";
@@ -1841,13 +2025,14 @@ emit signalValueUpdated(searchvalue);
 
 //mThread->valueChanged1(searchvalue);
 mThread->rewind(searchvalue);
-
+    }
 
 }
 
 void MainWindow::forwardslot()
 {
-
+    if(transportrunning==1)
+    {
   int searchvalue = ui->spinBox->value();
   qDebug() << "searchvalueFF:::::::::::::::::::::::::::";
    qDebug() << searchvalue;
@@ -1855,6 +2040,7 @@ void MainWindow::forwardslot()
   emit signalValueUpdated(searchvalue);
 
 mThread->forward(searchvalue);
+    }
 }
 
 void MainWindow::fileslot()
@@ -1925,8 +2111,8 @@ qDebug() << "..............restart error can't write file... blink warning here.
                 thfile.close();
 
 
-QSqlQuery query39tfolder;
-        query39tfolder.exec("UPDATE settingstable SET settingstext = '" + TapeFolder + "' WHERE id = 3;");
+//QSqlQuery query39tfolder;
+//        query39tfolder.exec("UPDATE settingstable SET settingstext = '" + TapeFolder + "' WHERE id = 3;");
 
 //sleep(1);
 //        QMessageBox msgBox;
@@ -1953,6 +2139,7 @@ QSqlQuery query39tfolder;
 
 void MainWindow::playslot()
 {
+    transportrunning=1;
    mThread->play();
 
 //   //-- int cstimestart =1;
@@ -1975,14 +2162,118 @@ void MainWindow::playslot()
 
 
 
+void MainWindow::writedb()
+{
+
+    if(activetapeST!=NULL)
+    {
+
+
+         //QString tapeslotfilename = activetapeST + "/armtrack_8.txt";
+         QString tapeslotfilename = activetapeST +"/db.txt";
+
+
+
+    //QFile thfile("trm8tt_tapeslot.txt");
+     QFile thfile(tapeslotfilename);
+                 if (!thfile.open(QIODevice::WriteOnly | QIODevice::Text))
+                 {
+   qDebug() << "......./GUI_TRM8TT/...... error can't write db file... .......";
+                 }
+                      // return;
+                 else
+                 {
+                   QTextStream outh(&thfile);
+                   outh << dbLine1 << endl;
+                   outh << dbLine2 << endl;
+                   outh << dbLine3 << endl;
+                    outh << dbLine4 << endl;
+                     outh << dbLine5 << endl;
+                      outh << dbLine6 << endl;
+                       outh << dbLine7 << endl;
+                          outh << dbLine8 << endl;
+
+
+                  }
+
+                   thfile.close();
+
+
+
+
+
+
+          }
+
+
+
+}
+
+
+
+
+void MainWindow::writenotedb()
+{
+
+    note1enterslot();
+    note2enterslot();
+    note3enterslot();
+    note4enterslot();
+    note5enterslot();
+    note6enterslot();
+    note7enterslot();
+    note8enterslot();
+
+
+//notes file------------------------------
+
+    if(activetapeST!=NULL)
+    {
+QString notesfilename = activetapeST +"/dbnotes.txt";
+
+
+
+
+QFile nthfile(notesfilename);
+        if (!nthfile.open(QIODevice::WriteOnly | QIODevice::Text))
+        {
+qDebug() << "......./GUI_TRM8TT/....... error can't write notes file... .......";
+        }
+
+        else
+        {
+          QTextStream nouth(&nthfile);
+          nouth << dbNote1 << endl;
+          nouth << dbNote2 << endl;
+          nouth << dbNote3 << endl;
+           nouth << dbNote4 << endl;
+            nouth << dbNote5 << endl;
+             nouth << dbNote6 << endl;
+              nouth << dbNote7 << endl;
+                 nouth << dbNote8 << endl;
+
+
+         }
+
+          nthfile.close();
+
+
+
+//end notes file------------------------------
+}
+}
+
 
 void MainWindow::note1enterslot()
 {
 
 
+
     QString note1= ui->lineEdit->text();
-    QSqlQuery query39savemn1;
-                             query39savemn1.exec("UPDATE tracktable SET tracknote = '" + note1 + "' WHERE id = 1;");
+    dbNote1=note1;
+
+//    QSqlQuery query39savemn1;
+//                             query39savemn1.exec("UPDATE tracktable SET tracknote = '" + note1 + "' WHERE id = 1;");
 
 }
 
@@ -1993,8 +2284,11 @@ void MainWindow::note2enterslot()
 
 
     QString note2= ui->lineEdit_2->text();
-    QSqlQuery query39savemn2;
-                             query39savemn2.exec("UPDATE tracktable SET tracknote = '" + note2 + "' WHERE id = 2;");
+     dbNote2=note2;
+
+
+//    QSqlQuery query39savemn2;
+//                             query39savemn2.exec("UPDATE tracktable SET tracknote = '" + note2 + "' WHERE id = 2;");
 
 }
 
@@ -2003,8 +2297,10 @@ void MainWindow::note3enterslot()
 
 
     QString note3= ui->lineEdit_3->text();
-    QSqlQuery query39savemn3;
-                             query39savemn3.exec("UPDATE tracktable SET tracknote = '" + note3 + "' WHERE id = 3;");
+     dbNote3=note3;
+
+//    QSqlQuery query39savemn3;
+//                             query39savemn3.exec("UPDATE tracktable SET tracknote = '" + note3 + "' WHERE id = 3;");
 
 }
 
@@ -2013,8 +2309,11 @@ void MainWindow::note4enterslot()
 
 
     QString note4= ui->lineEdit_4->text();
-    QSqlQuery query39savemn4;
-                             query39savemn4.exec("UPDATE tracktable SET tracknote = '" + note4 + "' WHERE id = 4;");
+     dbNote4=note4;
+
+
+//    QSqlQuery query39savemn4;
+//                             query39savemn4.exec("UPDATE tracktable SET tracknote = '" + note4 + "' WHERE id = 4;");
 
 }
 
@@ -2023,8 +2322,11 @@ void MainWindow::note5enterslot()
 
 
     QString note5= ui->lineEdit_5->text();
-    QSqlQuery query39savemn5;
-                             query39savemn5.exec("UPDATE tracktable SET tracknote = '" + note5 + "' WHERE id = 5;");
+     dbNote5=note5;
+
+
+//    QSqlQuery query39savemn5;
+//                             query39savemn5.exec("UPDATE tracktable SET tracknote = '" + note5 + "' WHERE id = 5;");
 
 }
 
@@ -2033,8 +2335,11 @@ void MainWindow::note6enterslot()
 
 
     QString note6= ui->lineEdit_6->text();
-    QSqlQuery query39savemn6;
-                             query39savemn6.exec("UPDATE tracktable SET tracknote = '" + note6 + "' WHERE id = 6;");
+     dbNote6=note6;
+
+
+//    QSqlQuery query39savemn6;
+//                             query39savemn6.exec("UPDATE tracktable SET tracknote = '" + note6 + "' WHERE id = 6;");
 
 }
 
@@ -2043,8 +2348,11 @@ void MainWindow::note7enterslot()
 
 
     QString note7= ui->lineEdit_7->text();
-    QSqlQuery query39savemn7;
-                             query39savemn7.exec("UPDATE tracktable SET tracknote = '" + note7 + "' WHERE id = 7;");
+     dbNote7=note7;
+
+
+//    QSqlQuery query39savemn7;
+//                             query39savemn7.exec("UPDATE tracktable SET tracknote = '" + note7 + "' WHERE id = 7;");
 
 }
 
@@ -2053,8 +2361,11 @@ void MainWindow::note8enterslot()
 
 
     QString note8= ui->lineEdit_8->text();
-    QSqlQuery query39savemn8;
-                             query39savemn8.exec("UPDATE tracktable SET tracknote = '" + note8 + "' WHERE id = 8;");
+     dbNote8=note8;
+
+
+//    QSqlQuery query39savemn8;
+//                             query39savemn8.exec("UPDATE tracktable SET tracknote = '" + note8 + "' WHERE id = 8;");
 
 }
 
@@ -2259,6 +2570,9 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+
+
 
 
 

@@ -16712,6 +16712,19 @@
          <string>Save Midi Controller</string>
         </property>
        </widget>
+       <widget class="QLabel" name="labelversion">
+        <property name="geometry">
+         <rect>
+          <x>70</x>
+          <y>420</y>
+          <width>681</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
       </widget>
      </widget>
     </item>

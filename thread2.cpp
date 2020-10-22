@@ -56,11 +56,11 @@
 
 #include <QFile>
 
-//sql
-#include <QSqlDatabase>
-#include <QSqlDriver>
-#include <QSqlError>
-#include <QSqlQuery>
+//sql removed for v80
+//#include <QSqlDatabase>
+//#include <QSqlDriver>
+//#include <QSqlError>
+//#include <QSqlQuery>
 
 using namespace std;
 
@@ -161,8 +161,13 @@ char *buf, *s, *port_name;
         err = snd_seq_open(&seq, "default", SND_SEQ_OPEN_DUPLEX, 0);
         check_snd("open sequencer", err);
 
+        qDebug() << "___222__________________--aseq  " << err;
+
+
         err = snd_seq_set_client_name(seq, "aseqtransport");
     check_snd("set client name", err);
+
+    qDebug() << "___333__________________--aseq  " << err;
 
 
     //portname
@@ -172,18 +177,29 @@ char *buf, *s, *port_name;
     QString HomePathT = QDir::homePath();
          QString controllerfilename = HomePathT + "/GUI_TRM8TT/trm8tt_controller.txt";
 
+          qDebug() << "___444____controllerfilename______________--aseq  " << controllerfilename;
+
        //QFile hfile("trm8tt_controller.txt");
         QFile hfile(controllerfilename);
               if (!hfile.open(QIODevice::ReadOnly | QIODevice::Text))
               {
                 //emit midiinfo("Midi error (file)");
+                  qDebug() << "___Midi error (file)______________--aseq  " << controllerfilename;
               }
               //
               else
               {
+                  qDebug() << "___Midi error (file)___else___________--aseq  " << controllerfilename;
+
+
               QTextStream in(&hfile);
-                    while (!in.atEnd())
-                      {
+
+               qDebug() << "___Midi error (file)___else____222_______--aseq  " << controllerfilename;
+
+                    //while (!in.atEnd())
+                    //  {
+                        qDebug() << "___while___________--aseq  " << controllerfilename;
+
                         QString hostrr = in.readLine();
 
                         if(~(hostrr.isEmpty()))
@@ -206,9 +222,16 @@ char *buf, *s, *port_name;
                           qDebug() << "port_name= -------+++++++++++++++++++++++++++++++++++++-------****************----------" << port_name;
 
                              }
-                       }
-              }
-                hfile.close();
+                         if((hostrr.isEmpty())){
+                            qDebug() << "___file empty___________--aseq  " << controllerfilename;
+                        }
+                 //      }
+
+
+                    //--------
+          //    }
+           //     hfile.close();
+                //----------
 
 
     //
@@ -243,7 +266,11 @@ char *buf, *s, *port_name;
 
     //end portname
 
+                qDebug() << "__pre---_buf port__________--aseq  ";
+
     buf = strdup(port_name);
+
+    qDebug() << "___buf port__________--aseq  ";
 
     for (port_name = s = buf; s; port_name = s + 1)
     {
@@ -333,6 +360,15 @@ char *buf, *s, *port_name;
                               fflush(stdout);
                            }
 
+
+      //------
+
+              }
+                hfile.close();
+
+
+
+      //---------
 
 }
 

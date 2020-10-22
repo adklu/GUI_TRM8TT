@@ -45,6 +45,8 @@ public:
     void restart_slot();
     int signalmeter(ECA_CONTROL_INTERFACE* ecas);
 
+    //void recvalue_t8(int recv_t8N);
+
 
 
     void loop_device();
