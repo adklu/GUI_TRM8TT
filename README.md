@@ -110,4 +110,4 @@ Midi channel = Channel 1
 ### D) GUI
 
 
-see GUI_png
+![alt text](https://github.com/AndreasDanielKlumpp/GUI_TRM8TT/blob/master/GUI_png3.png)
