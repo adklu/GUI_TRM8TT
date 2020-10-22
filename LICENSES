@@ -13,7 +13,7 @@ A) LICENSES of included non-GUI_TRM8TT files and libraries
 6) ecicpp_tester.cpp
 7) kvu_numtostr.cpp
 8) libecasound_tester.c
-9) Qt
+
 B) LICENSE of GUI_TRM8TT
 
 
@@ -230,8 +230,7 @@ ecicpp_tester.cpp
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307  USA
  * ------------------------------------------------------------------------ */
 
-9)
-Qt: http://wiki.qt.io/Get_The_Source
+
 
 B)
  /* GUI_TRM8TT 
@@ -253,3 +252,7 @@ B)
  *  along with this program; if not, write to the Free Software
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
  */
+ 
+ 
+
+For Qt see: http://wiki.qt.io/Get_The_Source
