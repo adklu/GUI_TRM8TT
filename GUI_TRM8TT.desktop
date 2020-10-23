@@ -1,11 +1,11 @@
 [Desktop Entry]
 Name=GUI_TRM8TT
-Version=0.0.77
+Version=105p
 GenericName=GUI_TRM8TT
 Comment=GUI_TRM8TT
 Exec=/home/[user name]/GUI_TRM8TT/GUI_TRM8TT %F
 Icon=/home/[user name]/GUI_TRM8TT/32_32.png
 Categories=audio;Qt;
-Keywords=audio;recorder;Qt;
+Keywords=audio;recorder;
 Terminal=false
 Type=Application
