@@ -30,9 +30,9 @@ qmake
 
 GNU Autotools (automake, autoconf, configure, make)
 
-(mesa-common-dev)
+mesa-common-dev
 
-(libgl1-mesa-dev, libglu1-mesa-dev)
+libgl1-mesa-dev, libglu1-mesa-dev
 
 ALSA
 
