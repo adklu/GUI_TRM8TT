@@ -89,17 +89,25 @@ Assignment of a set of 8 CC faders/knobs to volume or balance:
 If no vol_map or pan_map files are inside of the GUI_TRM8TT folder, the following values are used: int vol_map = 1; int pan_map = 10 (midi CC 1 to 8 are assigned as volume faders and midi CC 10 to 17 are assigned as panning knobs = Behringer XTouchCompact Layer A).
 
 To change the volume faders assignment:
+
 Create (with a text editor) inside of /home/[username]/GUI_TRM8TT a file with the name "vol_map", enter the first midi CC number (e.g. "10"), save and close the file (now midi CC 10 to 17 are assigned as volume faders).
 
 To change the panning knobs assignment:
+
 Create inside of /home/[username]/GUI_TRM8TT a file with the name "pan_map", enter the first midi CC number (e.g. "1"), save and close the file (now midi CC 1 to 8 are assigned as panning knobs).
 
 Button assignments ['Transport function': Midi note]:
+
 '<<': 49
+
 '>>': 50
+
 'RTZ': 51
+
 'STOP': 53
+
 '>':54
+
 (= Behringer XTouchCompact default settings)
 
 Midi channel = Channel 1
