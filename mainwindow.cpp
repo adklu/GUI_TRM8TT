@@ -1,7 +1,7 @@
 
 #include <QString>
 
-QString version_trm8tt = "GUI_TRM8TT v105p by A.D.Klumpp";
+QString version_trm8tt = "GUI_TRM8TT v121 by A.D.Klumpp";
 
 
 #include "mainwindow.h"
@@ -13,6 +13,8 @@ QString version_trm8tt = "GUI_TRM8TT v105p by A.D.Klumpp";
 
 
 #include <QFileDialog>
+
+//#include <QColorDialog>
 
 #include <QLineEdit>
 #include <QFile>
@@ -42,6 +44,9 @@ QString version_trm8tt = "GUI_TRM8TT v105p by A.D.Klumpp";
 //QSqlDatabase notesdb;
 
 //alsa
+
+float bitsPerSample = 24;
+float channels = 1;
 
 int transportrunning = 0;
 
@@ -98,6 +103,15 @@ QString dbNote5="5";
 QString dbNote6="6";
 QString dbNote7="7";
 QString dbNote8="8";
+
+ float t1size = 0;
+  float t2size = 0;
+   float t3size = 0;
+    float t4size = 0;
+     float t5size = 0;
+      float t6size = 0;
+      float t7size = 0;
+        float t8size = 0;
 
 
 QString activetapeST=NULL;
@@ -686,6 +700,116 @@ QString sTapeFolder=activetapeST;
 
 
 
+ //v106
+ //before launching thread1: get file size, after launching: get frame rate from thread and finish calculation
+
+
+ //before lauchning thread:
+
+ QString t1namepath = activetapeST +"/Track_1.wav";
+ QFile t1File(t1namepath);
+  if (t1File.open(QIODevice::ReadOnly))
+    {
+     t1size = t1File.size();
+     t1File.close();
+       qDebug() << "Size of track 1 wav-file: " << t1size;
+
+     }
+
+  //
+
+  QString t2namepath = activetapeST +"/Track_2.wav";
+  QFile t2File(t2namepath);
+   if (t2File.open(QIODevice::ReadOnly))
+     {
+      t2size = t2File.size();
+      t2File.close();
+        qDebug() << "Size of track 2 wav-file: " << t2size;
+
+      }
+
+   //3
+
+   QString t3namepath = activetapeST +"/Track_3.wav";
+   QFile t3File(t3namepath);
+    if (t3File.open(QIODevice::ReadOnly))
+      {
+       t3size = t3File.size();
+       t3File.close();
+         qDebug() << "Size of track 3 wav-file: " << t3size;
+
+       }
+
+    //4
+
+    QString t4namepath = activetapeST +"/Track_4.wav";
+    QFile t4File(t4namepath);
+     if (t4File.open(QIODevice::ReadOnly))
+       {
+        t4size = t4File.size();
+        t4File.close();
+          qDebug() << "Size of track 4 wav-file: " << t4size;
+
+        }
+
+     //5
+
+     QString t5namepath = activetapeST +"/Track_5.wav";
+     QFile t5File(t5namepath);
+      if (t5File.open(QIODevice::ReadOnly))
+        {
+         t5size = t5File.size();
+         t5File.close();
+           qDebug() << "Size of track 5 wav-file: " << t5size;
+
+         }
+
+      //6
+
+      QString t6namepath = activetapeST +"/Track_6.wav";
+      QFile t6File(t6namepath);
+       if (t6File.open(QIODevice::ReadOnly))
+         {
+          t6size = t6File.size();
+          t6File.close();
+            qDebug() << "Size of track 6 wav-file: " << t6size;
+
+          }
+
+       //7
+
+       QString t7namepath = activetapeST +"/Track_7.wav";
+       QFile t7File(t7namepath);
+        if (t7File.open(QIODevice::ReadOnly))
+          {
+           t7size = t7File.size();
+           t7File.close();
+             qDebug() << "Size of track 7 wav-file: " << t7size;
+
+           }
+
+        //8
+
+        QString t8namepath = activetapeST +"/Track_8.wav";
+        QFile t8File(t8namepath);
+         if (t8File.open(QIODevice::ReadOnly))
+           {
+            t8size = t8File.size();
+            t8File.close();
+              qDebug() << "Size of track 8 wav-file: " << t8size;
+
+            }
+
+
+
+
+
+
+
+ //-end v106
+
+
+
 
 
 
@@ -981,6 +1105,10 @@ connect(mThread,SIGNAL(possignalmin(QString)), ui->label_posmin, SLOT(setText(QS
 
 connect(mThread,SIGNAL(jsignalrate(QString)), ui->label_jackrate, SLOT(setText(QString)));
 //connect(mThread,SIGNAL(midiinfo(QString)), ui->label_midi, SLOT(setText(QString)));
+
+
+//v105
+connect(mThread,SIGNAL(floatsignalrate(float)), this, SLOT(getframerate(float)));
 
 
 connect(mThread,SIGNAL(midiinfo(QString)), ui->statusBar, SLOT(showMessage(QString)));
@@ -1638,7 +1766,188 @@ ui->comboBox_8->addItem(sendjar);
 
 }
 
+//v106
 
+void MainWindow::getframerate(float gxrate)
+{
+    //after lauchning thread1, get xrate = float(tpos.frame_rate) from thread 1):
+
+    qDebug() << "show getframerate(float gxrate________________________- " << gxrate;
+
+     // samplesPerSecond = gxrate;
+
+
+    //1
+if (t1size>0)
+{
+
+
+  float f1duration = ((t1size*8)/(bitsPerSample * gxrate * channels))/60;
+
+
+    qDebug() << "duration of track 1: " << f1duration;
+
+    QString sf1duration =  QString::number(f1duration);
+    QString dsf1duration = sf1duration+" min.";
+
+    QPalette palette = ui->label_t1->palette();
+    palette.setColor(QPalette::WindowText, Qt::white);
+    ui->label_t1->setPalette(palette);
+
+    ui->label_t1->setText(dsf1duration);
+
+}
+
+//2
+if (t2size>0)
+{
+
+
+float f2duration = ((t2size*8)/(bitsPerSample * gxrate * channels))/60;
+
+
+qDebug() << "duration of track 2: " << f2duration;
+
+QString sf2duration =  QString::number(f2duration);
+QString dsf2duration = sf2duration+" min.";
+
+QPalette palette = ui->label_t2->palette();
+palette.setColor(QPalette::WindowText, Qt::white);
+ui->label_t2->setPalette(palette);
+
+ui->label_t2->setText(dsf2duration);
+
+}
+
+//3
+if (t3size>0)
+{
+
+
+float f3duration = ((t3size*8)/(bitsPerSample * gxrate * channels))/60;
+
+
+qDebug() << "duration of track 3: " << f3duration;
+
+QString sf3duration =  QString::number(f3duration);
+QString dsf3duration = sf3duration+" min.";
+
+QPalette palette = ui->label_t3->palette();
+palette.setColor(QPalette::WindowText, Qt::white);
+ui->label_t3->setPalette(palette);
+
+ui->label_t3->setText(dsf3duration);
+
+}
+
+//4
+if (t4size>0)
+{
+
+
+float f4duration = ((t4size*8)/(bitsPerSample * gxrate * channels))/60;
+
+
+qDebug() << "duration of track 4: " << f4duration;
+
+QString sf4duration =  QString::number(f4duration);
+QString dsf4duration = sf4duration+" min.";
+
+QPalette palette = ui->label_t4->palette();
+palette.setColor(QPalette::WindowText, Qt::white);
+ui->label_t4->setPalette(palette);
+
+ui->label_t4->setText(dsf4duration);
+
+}
+
+//5
+if (t5size>0)
+{
+
+
+float f5duration = ((t5size*8)/(bitsPerSample * gxrate * channels))/60;
+
+
+qDebug() << "duration of track 5: " << f5duration;
+
+QString sf5duration =  QString::number(f5duration);
+QString dsf5duration = sf5duration+" min.";
+
+QPalette palette = ui->label_t5->palette();
+palette.setColor(QPalette::WindowText, Qt::white);
+ui->label_t5->setPalette(palette);
+
+ui->label_t5->setText(dsf5duration);
+
+}
+
+//6
+if (t6size>0)
+{
+
+
+float f6duration = ((t6size*8)/(bitsPerSample * gxrate * channels))/60;
+
+
+qDebug() << "duration of track 6: " << f6duration;
+
+QString sf6duration =  QString::number(f6duration);
+QString dsf6duration = sf6duration+" min.";
+
+QPalette palette = ui->label_t6->palette();
+palette.setColor(QPalette::WindowText, Qt::white);
+ui->label_t6->setPalette(palette);
+
+ui->label_t6->setText(dsf6duration);
+
+}
+
+//7
+if (t7size>0)
+{
+
+
+float f7duration = ((t7size*8)/(bitsPerSample * gxrate * channels))/60;
+
+
+qDebug() << "duration of track 7: " << f7duration;
+
+QString sf7duration =  QString::number(f7duration);
+QString dsf7duration = sf7duration+" min.";
+
+QPalette palette = ui->label_t7->palette();
+palette.setColor(QPalette::WindowText, Qt::white);
+ui->label_t7->setPalette(palette);
+
+ui->label_t7->setText(dsf7duration);
+
+}
+
+//8
+if (t8size>0)
+{
+
+
+float f8duration = ((t8size*8)/(bitsPerSample * gxrate * channels))/60;
+
+
+qDebug() << "duration of track 8: " << f8duration;
+
+QString sf8duration =  QString::number(f8duration);
+QString dsf8duration = sf8duration+" min.";
+
+QPalette palette = ui->label_t8->palette();
+palette.setColor(QPalette::WindowText, Qt::white);
+ui->label_t8->setPalette(palette);
+
+ui->label_t8->setText(dsf8duration);
+
+}
+
+
+//end
+}
 
 
 void MainWindow::tograph1(int sendiT1)

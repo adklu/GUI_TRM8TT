@@ -79,6 +79,8 @@ private slots:
        void tograph7(int sendiT7);
        void tograph8(int sendiT8);
 
+       void getframerate(float gxrate);
+
        void savemidislot();
 
        void tolistinput(QString sendjar);

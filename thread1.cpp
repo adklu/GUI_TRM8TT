@@ -2129,7 +2129,9 @@ QString vol_mapPath = HomePathT + "/GUI_TRM8TT/vol_map";
 
     ecas.command("cs-add play_chainsetup");
 
-    ecas.command("cs-set-audio-format ’24,2,’");
+
+    //wip v110
+    //ecas.command("cs-set-audio-format ’24,2,’");
 
    ecas.command("cs-set-param -G:jack,system,recv");
 
@@ -2182,6 +2184,11 @@ QString vol_mapPath = HomePathT + "/GUI_TRM8TT/vol_map";
                 {
                     qDebug() << TrackName << "does exist";
 
+                    //wip v110
+                         //ecas.command("-f:24,2,");
+                    //ecas.command("-f:s24_le,2,44100,i");
+
+
 
 
                     QString qcai_addo = "c-add chain" + QString::number(trackNR);
@@ -2202,10 +2209,15 @@ QString vol_mapPath = HomePathT + "/GUI_TRM8TT/vol_map";
                     //ecas.command("c-select chain1");
                     ecas.command(cstrcs);
 
-                    //ecas.command("-f:24,1,");
+
+           //wip v110
+                   //ecas.command("-f:24,2,");
                     //ecas.command("cop-add -chcopy:1,2");
 
                      ecas.command("ao-add jack,system");
+
+                     //v110
+                     ecas.command("-f:24,2,");
 
 
                     //with master track use system-01
@@ -2596,6 +2608,8 @@ qDebug() << TrackName << "does not exist, emptytracks:" << emptytracks;
 //            }
 
 
+
+//**********************************REC***************************************************
 //if track is empty and marked as recordready, get input selection and prepare rec-chain:
 
 if(recvaluestring=="1")
@@ -2726,6 +2740,7 @@ inputsstring=getdbLine8;
  //ecas.command("c-select chain1");
 ecas.command(cstrcs);
 
+// -f:24,1, will creat the mono file with 24 bit, but the panning for all tracks after the rec track is locked on the left channel, if not removed after
 ecas.command("-f:24,1,");
 
 // ecas.command("ai-add jack,capture_1");
@@ -2750,7 +2765,8 @@ ecas.command(jcstrcs);
  qDebug() << "ao-add" << qPrintable(cstr);
 ecas.command(cstr);
 
-
+// v110 added to avoid panning to left channel for the following playback channels
+ecas.command("-f:24,2,");
 
 //software monitoring
 //ecas.command("ao-add jack,system");
@@ -2760,22 +2776,25 @@ ecas.command(cstr);
 
 
 
+//cop 1
+         //chcopy to get mono file ready for epp panning
+         ecas.command("cop-add -chcopy:1,2");
 
- //chcopy to get mono file ready for epp panning
- ecas.command("cop-add -chcopy:1,2");
- //pan
- //ecas.command("cop-add -epp:50");
- //ea to control the volume
- ecas.command("cop-add -ea:50");
- //evp for signal meter (after ea)
- ecas.command("cop-add -evp");
- // ecas.command("cop-add -ete:0,50,50");
+//cop 2
+         //ea to control the volume
+         ecas.command("cop-add -ea:50");
 
- //pan
- ecas.command("cop-add -epp:50");
+//cop 3
+         //evp for signal meter (after ea)
+         ecas.command("cop-add -evp");
+
+//cop 4
+
+         //pan
+         ecas.command("cop-add -epp:50");
+
 
  //epp (pan)
- //int panchan = 9 + trackNR;
    int panchan = pan_map - 1 + trackNR;
  qDebug() << "panchan" << panchan;
  QString qpfai_addo = "ctrl-add -km:1,0,100," + QString::number(panchan) + ",1";
@@ -2785,20 +2804,18 @@ ecas.command(cstr);
  const char * pfcstr = pfstdstr.c_str();
  qDebug() << "pfcstr" << qPrintable(pfcstr);
  ecas.command("cop-select 4");
- //ecas.command("ctrl-add -km:1,0,100,10,1");
  ecas.command(pfcstr);
+
 
  //ea (faders)
  int volchan = vol_map - 1 + trackNR;
- //QString qfai_addo = "ctrl-add -km:1,0,180," + QString::number(trackNR) + ",1";
-  QString qfai_addo = "ctrl-add -km:1,0,180," + QString::number(volchan) + ",1";
+   QString qfai_addo = "ctrl-add -km:1,0,180," + QString::number(volchan) + ",1";
  QString qfai_add = qfai_addo;
  QString fstr = qfai_add;
  std::string fstdstr = fstr.toStdString();
  const char * fcstr = fstdstr.c_str();
  qDebug() << "fcstr" << qPrintable(fcstr);
  ecas.command("cop-select 2");
- //ecas.command("ctrl-add -km:1,0,180,1,1");
  ecas.command(fcstr);
 
 
@@ -2937,6 +2954,10 @@ if (client)
                     jack_position_t tpos;
                     jack_transport_query(client, &tpos);
                     xrate = float(tpos.frame_rate);
+
+
+                    //v106
+                    emit floatsignalrate(xrate);
 
 
 

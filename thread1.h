@@ -151,6 +151,8 @@ signals:
     void jsignalrate(QString frateec);
     void midiinfo(QString sigmidiinfo);
 
+    void floatsignalrate(float gxrate);
+
    //void jarsignal(QList<QString> sendjar);
     void jarsignal(QString sendjar);
 

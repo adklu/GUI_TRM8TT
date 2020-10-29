@@ -1,4 +1,4 @@
-v105p
+v121p
 
 ## GUI_TRM8TT - Professional 8 Track Audio Recorder
 
@@ -16,9 +16,7 @@ D) GUI
 
 ------------------
 
-
 ### A) REQUIRED
-
 
 Linux (tested with Debian 9 and 10)
 
@@ -76,11 +74,12 @@ Icon=/home/[username]/GUI_TRM8TT/32_32.png
 
 ### C) FIRST TIME USE
 
-Set sampling rate/frames/period/buffer... in JACK e.g. via QjackCtl (GUI_TRM8TT will start JACK automatically with the saved settings). Bit depth is 24 bit.
+Set sampling rate, frames/period, periods/buffer... in JACK and activate realtime mode (e.g. via QjackCtl). GUI_TRM8TT will start JACK automatically with the saved settings. 
+Bit depth is always 24 bit.
 
 GUI_TRM8TT is creating 4 helper .sh files inside of the GUI_TRM8TT folder (Message: 'Please restart your PC, mark all GUI_xTRM8TT_exit.sh or GUI_xTRM8TT_restart.sh files as executables and restart the program.'). Without these executable files GUI_TRM8TT will not work.
 
-Create/select a 'tape' folder (it is possible to import mono .wav files with the same sampling rate as the Jack session (24 bit). Only files with the names Track_1.wav until Track_8.wav are recognized as active tracks (instead of deleting track files, tracks can be renamed e.g. Track_1_Take1.wav).
+Create/select a 'tape' folder (it is possible to import 24 bit mono .wav files with the same sampling rate as the Jack session. Only files with the names Track_1.wav until Track_8.wav are recognized as active tracks (instead of deleting track files, tracks can be renamed e.g. Track_1_Take1.wav).
 
 Select the midi CC controller (Settings) and restart GUI_TRM8TT.
 
